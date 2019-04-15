@@ -2,6 +2,7 @@ import React from 'react';
 import NewWorkoutForm from '../components/NewWorkoutForm';
 import NewExerciseButton from '../components/NewExerciseButton';
 import styled from "styled-components";
+import ExerciseSelector from '../components/ExerciseSelector';
 
 const NewWorkoutDiv = styled.div`
   width: 35%;

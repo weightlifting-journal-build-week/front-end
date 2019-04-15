@@ -8,6 +8,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
+import ExerciseSelector from './ExerciseSelector';
+import AddSetButton from './AddSetButton';
 
 const styles = theme => ({
     root: {
@@ -16,6 +18,17 @@ const styles = theme => ({
     table: {
         minWidth: 400,
     },
+    tableHead: {
+        border: '1px solid red',
+        width: '100%',
+    },
+    exerciseSelector: {
+        width: '80%',
+    },
+    addSetContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    }
 });
 
 let id = 0;
@@ -26,11 +39,11 @@ function createData(exercise, lbs, reps) {
 
 const rows = [
     createData('Set', 'lbs', 'reps'),
-    createData('1', '', ''),
-    createData('2', 155, 5),
-    createData('3', 90, 5),
-    createData('4', 120, 8),
-    createData('5', 115, 8),
+    createData('', '', ''),
+    createData('Bench Press', 155, 5, 37, 4.3),
+    createData('Overhead Press', 90, 5, 24, 6.0),
+    createData('Wide-Grip Lat Pulldown', 120, 8, 67, 4.3),
+    createData('Front Squat', 115, 8, 49, 3.9),
 ];
 
 function SimpleTable(props) {
@@ -38,10 +51,9 @@ function SimpleTable(props) {
 
     return (
         <Paper className={classes.root}>
+            <ExerciseSelector className={classes.exerciseSelector} />
             <Table className={classes.table}>
                 <TableHead>
-                    <TableRow>
-                    </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map(row => (
@@ -55,6 +67,9 @@ function SimpleTable(props) {
                     ))}
                 </TableBody>
             </Table>
+            <div className={classes.addSetContainer}>
+                <AddSetButton className={classes.addSet} />
+            </div>
         </Paper>
     );
 }
