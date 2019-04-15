@@ -21,26 +21,46 @@
 */
 
 //example
-const = {
-  username: 'Clark Kent',
-  email: 'clarkkent@notsuperman.com',
-  password: 'password',
-  height: 76,
-  weight: 225,
-}
-const fiveByFiveA = {
-  id: 1,
-  name: '5x5 A',
-  date: '04-15-2019', 
-  user_id: 1,
-}
+const users = [
+  {
+    name: 'Clark Kent',
+    username: 'Superman',
+    email: 'clarkkent@superman.com',
+    password: 'password',
+    height: 76,
+    weight: 225,
+  }
+]
 
-const exercise = {
-  id: 1,
-  name: 'squat',
-  target_area: 'legs/compound',
-  workout_id: 1,
-}
+const workouts = [
+  {
+    id: 1,
+    name: '5x5 A',
+    date: '04-15-2019', 
+    user_id: 1,
+  }
+  {
+    id: 2,
+    name: '5x5 B',
+    date: '04-17-2019', 
+    user_id: 1,
+  }
+]
+
+const exercises = [
+  {
+    id: 1,
+    name: 'squat',
+    target_area: 'legs/compound',
+    workout_id: 1,
+  },
+  {
+    id: 2,
+    name: 'squat',
+    target_area: 'legs/compound',
+    workout_id: 2,
+  }
+]
 
 const sets = [
   {
@@ -48,29 +68,59 @@ const sets = [
     reps: 5,
     weight: 595,
     exercise_id: 1,
-  }
+  },
   {
     id: 2,
     reps: 5,
     weight: 595,
     exercise_id: 1,
-  }
+  },
   {
     id: 3,
     reps: 5,
     weight: 595,
     exercise_id: 1,
-  }
+  },
   {
     id: 4,
     reps: 5,
     weight: 595,
     excercise_id: 1
-  }
+  },
   {
     id: 5,
     reps: 5,
-    weight: 595,
-    excercise_id: 1
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 6,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 7,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 8,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 9,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 10,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
   }
 ]
