@@ -3,101 +3,124 @@
   ----------
     id
     name (string)
-    days (array)
-
-  Day
-  ----
-    id
-    workout_id
-    exercises (array)
+    date (string)
 
   Exercise
   ----------
     id
-    day_id
+    workout_id
     name (string)
-    sets (array)
+    target_area(string)
 
   Set
   ----
+    id
     exercise_id
     reps (number)
     weight (number)
 */
 
-//EXAMPLE
-const fiveByFive = {
-  name: '5x5',
-  days: [
-    {
-      name: 'A'
-      exercises: [
-        {
-          name: 'deadlift',
-          sets: [
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275}
-          ]
-        },
-        {
-          name: 'squat',
-          sets: [
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275},
-            {reps: 5, weight: 275}
-          ]
-        },
-        {
-          name: 'overhead press',
-          sets: [
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125}
-          ]//End of sets
-        }//End of exercise
-      ]//End of exercises  
-    },
-    {
-      name: 'B',
-      exercises: [
-        {
-          name: 'bench press',
-          sets: [
-            {reps: 5, weight: 165},
-            {reps: 5, weight: 165},
-            {reps: 5, weight: 165},
-            {reps: 5, weight: 165},
-            {reps: 5, weight: 165}
-          ]
-        },
-        {
-          name: 'squat',
-          sets: [
-            {reps: 5, weight: 280},
-            {reps: 5, weight: 280},
-            {reps: 5, weight: 280},
-            {reps: 5, weight: 280},
-            {reps: 5, weight: 280}
-          ]
-        },
-        {
-          name: 'bent over row',
-          sets: [
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125},
-            {reps: 5, weight: 125}
-          ]//End of sets
-        }//End of exercise
-      ]//End of exercises
-    }//End of day
-  ]//End of days
-}
+//example
+const users = [
+  {
+    name: 'Clark Kent',
+    username: 'Superman',
+    email: 'clarkkent@superman.com',
+    password: 'password',
+    height: 76,
+    weight: 225,
+  }
+]
+
+const workouts = [
+  {
+    id: 1,
+    name: '5x5 A',
+    date: '04-15-2019', 
+    user_id: 1,
+  }
+  {
+    id: 2,
+    name: '5x5 B',
+    date: '04-17-2019', 
+    user_id: 1,
+  }
+]
+
+const exercises = [
+  {
+    id: 1,
+    name: 'squat',
+    target_area: 'legs/compound',
+    workout_id: 1,
+  },
+  {
+    id: 2,
+    name: 'squat',
+    target_area: 'legs/compound',
+    workout_id: 2,
+  }
+]
+
+const sets = [
+  {
+    id: 1,
+    reps: 5,
+    weight: 595,
+    exercise_id: 1,
+  },
+  {
+    id: 2,
+    reps: 5,
+    weight: 595,
+    exercise_id: 1,
+  },
+  {
+    id: 3,
+    reps: 5,
+    weight: 595,
+    exercise_id: 1,
+  },
+  {
+    id: 4,
+    reps: 5,
+    weight: 595,
+    excercise_id: 1
+  },
+  {
+    id: 5,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 6,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 7,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 8,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 9,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  },
+  {
+    id: 10,
+    reps: 5,
+    weight: 600,
+    excercise_id: 2
+  }
+]

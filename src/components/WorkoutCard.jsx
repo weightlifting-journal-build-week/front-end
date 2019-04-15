@@ -7,7 +7,7 @@ import WorkoutHistory from './WorkoutHistory';
 
 const styles = theme => ({
     card: {
-        minWidth: 275,
+        minWidth: 500,
         width: '35%',
         margin: '0 auto',
         marginTop: theme.spacing.unit * 3,

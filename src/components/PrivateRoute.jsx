@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 const PrivateRoute = ({
     component: Component,
-    token,
     errorStatusCode,
+    token=true,
     ...rest }) => {
     return (
         <Route
