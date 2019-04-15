@@ -1,6 +1,9 @@
+import axios from 'axios';
+
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const FAIL = 'FAIL';
+
 
 const url = 'http://';
 
