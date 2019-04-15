@@ -1,11 +1,15 @@
 import {
 LOGIN_START,
 LOGIN_SUCCESS,
+GET_WORKOUTS_START,
+GET_WORKOUTS_SUCCESS,
 FAIL
 } from '../actions';
 
 const initialState = {
-  loggingIn:false,
+  user: {},
+  loggingIn: false,
+  gettingWorkouts: false,
   error: '',
   token: localStorage.getItem('token') 
 };
@@ -23,6 +27,8 @@ const reducer = (state = initialState, action) => {
         loggingIn: false,
         token: action.payload
       }
+      case 
+    case 
     default:
       return state
 

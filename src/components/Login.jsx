@@ -15,9 +15,14 @@ class Login extends Component {
         }
     }
     login = event => {
-        event.preventDefault();
-        this.props.login(this.state.credentials)
-            .then(() => this.props.history.push('/'))
+      event.preventDefault();
+      this.props.login(this.state.credentials)
+        .then(() => this.props.history.push('/workouts/{}'))
+    }
+
+    tempLogin = event => {
+      event.preventDefault();
+      this.props.history.push('/workouts');
     }
 
     handleChange = event => {
@@ -31,7 +36,7 @@ class Login extends Component {
 
     render() {
         return (
-            <form className='login-form' onSubmit={this.login}>
+            <form className='login-form' onSubmit={this.tempLogin}>
 
                 <label for='username'>E-Mail</label>
                 <input
@@ -62,7 +67,8 @@ class Login extends Component {
     }
 }
 const mapStateToProps = state => {
-    return ({
+  return ({
+        user: state.user,
         error: state.error,
         loggingIn: state.loggingIn
     })

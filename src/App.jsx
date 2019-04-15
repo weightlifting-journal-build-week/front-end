@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
-import { Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 
 import Navbar from './components/Navbar';
-import NewWorkout from './components/NewWorkout';
-import WorkoutHistoryCard from './components/WorkoutHistoryCard';
+import WorkoutsView from './views/WorkoutsView';
 
-class App extends Component {
-    render() {
-        return (
-            <div className="App">
-                <h1>Weight Lifting Journal</h1>
-                <Navbar />
-                <Route path='/login' component={Login} />
-                <PrivateRoute exact path='/protected' />
-                <NewWorkout />
-                <WorkoutHistoryCard />
-            </div>
-        );
-    }
+const App = () => {
+  return (
+    <Router>
+      <div className="App">
+          <Navbar />
+          <Route 
+            path='/login' 
+            component={Login} 
+          />
+          <Route 
+            path='/workouts' 
+            component={WorkoutsView}
+          />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
