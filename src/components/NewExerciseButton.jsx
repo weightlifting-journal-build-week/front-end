@@ -24,7 +24,7 @@ function FloatingActionButtons(props) {
         <div className={classes.buttonContainer}>
             <Fab variant="extended" color="secondary" aria-label="Add" className={classes.fab}>
                 <AddIcon className={classes.addIcon} />
-                <strong>New Workout</strong>
+                <strong>Add Exercise</strong>
             </Fab>
         </div>
     );
