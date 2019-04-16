@@ -1,9 +1,9 @@
 import {
-LOGIN_START,
-LOGIN_SUCCESS,
-GET_WORKOUTS_START,
-GET_WORKOUTS_SUCCESS,
-FAIL
+    LOGIN_START,
+    LOGIN_SUCCESS,
+    GET_WORKOUTS_START,
+    GET_WORKOUTS_SUCCESS,
+    FAIL
 } from '../actions';
 
 const initialState = {

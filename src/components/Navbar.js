@@ -9,6 +9,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -28,6 +29,7 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        color: 'white',
     },
     search: {
         position: 'relative',
@@ -81,9 +83,11 @@ function SearchAppBar(props) {
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                         <MenuIcon style={{ fontSize: '2rem' }} />
                     </IconButton>
-                    <Typography className={classes.title} variant="h5" color="inherit" noWrap>
-                        Weight Lifting Journal
-                    </Typography>
+                    <Link to="/" className="logo" style={{textDecoration: 'none'}}>
+                        <Typography className={classes.title} variant="h5" color="inherit" noWrap>
+                            Weight Lifting Journal
+                        </Typography>
+                    </Link>
                     <div className={classes.grow} />
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>

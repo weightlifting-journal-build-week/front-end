@@ -8,13 +8,15 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
         margin: '25px 0',
+        backgroundColor: '#03a9f4',
     },
     addIcon: {
         marginRight: theme.spacing.unit,
     },
     buttonContainer: {
-        display: 'inline-block',
-        textAlign: 'center',
+        display: 'block',
+        margin: '0 auto',
+        textAlgin: 'center'
     }
 });
 
@@ -22,9 +24,9 @@ function FloatingActionButtons(props) {
     const { classes } = props;
     return (
         <div className={classes.buttonContainer}>
-            <Fab variant="extended" color="secondary" aria-label="Add" className={classes.fab}>
+            <Fab variant="extended" color="primary" aria-label="Add" className={classes.fab}>
                 <AddIcon className={classes.addIcon} />
-                <strong>New Workout</strong>
+                <strong>Add Set</strong>
             </Fab>
         </div>
     );
