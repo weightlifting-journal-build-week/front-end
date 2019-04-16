@@ -18,10 +18,8 @@ const styles = theme => ({
     },
 });
 
-let id = 0;
 function createData(exercise, lbs, reps) {
-    id += 1;
-    return { id, exercise, lbs, reps };
+    return { exercise, lbs, reps };
 }
 
 const rows = [

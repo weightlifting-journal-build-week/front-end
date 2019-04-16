@@ -27,20 +27,26 @@ export const login = credentials => dispatch => {
 
 export const GET_WORKOUTS_START = 'GET_WORKOUTS_START';
 export const GET_WORKOUTS_SUCCESS = 'GET_WORKOUTS_SUCCESS';
+export const GET_EXERCISES_START = 'GET_EXERCISES_START';
+export const GET_EXERCISES_SUCCESS = 'GET_EXERCISES_SUCCESS';
+export const GET_SETS_START = 'GET_SETS_START';
+export const GET_SETS_SUCCESS = 'GET_SETS_SUCCESS';
 
-export const userWorkouts = () => dispatch => {
-  dispatch({action: GET_WORKOUTS_START});
-  axios.get(`${url}/users/1/workouts`)
+export const getWorkouts = id => dispatch => {
+  dispatch({
+    type: GET_WORKOUTS_START
+  })
+  return axios
+    .get(`${url}users/${id}/workouts`)
     .then(response => {
-      console.log(response);
       dispatch({
-        action: LOGIN_SUCCESS,
+        type: GET_WORKOUTS_SUCCESS,
         payload: response.data
       })
     })
     .catch(error => {
       dispatch({
-        action: FAIL,
+        type: FAIL,
         payload: error
       })
     })

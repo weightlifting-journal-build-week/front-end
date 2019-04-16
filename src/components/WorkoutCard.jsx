@@ -24,8 +24,10 @@ function SimpleCard(props) {
 
     return (
         <Card className={classes.card}>
-            <Typography className={classes.date} variant="h5" gutterBottom>Sunday, April 14</Typography>
-            <WorkoutHistory />
+          <Typography className={classes.date} variant="h5" gutterBottom>
+              {props.workout.date}
+          </Typography>
+          <WorkoutHistory workout={props.workout}/>
         </Card>
     );
 }
