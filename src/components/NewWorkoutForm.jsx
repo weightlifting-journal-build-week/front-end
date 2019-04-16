@@ -41,11 +41,6 @@ class SimpleTable extends Component {
             sets: [
                 { set: 1, lbs: '', reps: '' },
             ],
-            currentSet: {
-                set: '',
-                lbs: '',
-                reps: ''
-            }
         }
     }
 
@@ -63,9 +58,23 @@ class SimpleTable extends Component {
     }
 
     handleWeightChange = (event, index) => {
-        console.log('index', event);
-        console.log('current set', this.state.sets[event]);
+        this.setState({
+            sets: [
+                ...this.state.sets.slice(0, index),
+                { set: index + 1, lbs: event.target.value, reps: this.state.sets[index].reps },
+                ...this.state.sets.slice(index + 1, this.state.sets.length)
+            ]
+        })
+    }
 
+    handleRepChange = (event, index) => {
+        this.setState({
+            sets: [
+                ...this.state.sets.slice(0, index),
+                { set: index + 1, lbs: this.state.sets[index].lbs, reps: event.target.value },
+                ...this.state.sets.slice(index + 1, this.state.sets.length)
+            ]
+        })
     }
 
     render() {
@@ -90,8 +99,6 @@ class SimpleTable extends Component {
                                     <TextField
                                         id="lbs"
                                         name="lbs"
-                                        // value={this.state.sets[index].lbs}
-                                        // onChange={(event) => this.handleWeightChange(event, index)}
                                         type="number"
                                         className={this.props.classes.textField}
                                         margin="small"
@@ -100,14 +107,14 @@ class SimpleTable extends Component {
                                         fullWidth="false"
                                         margin="dense"
                                         style={{ width: '2.5rem' }}
+                                        value={this.state.sets[index].lbs}
+                                        onChange={event => this.handleWeightChange(event, index)}
                                     />
                                 </TableCell>
                                 <TableCell align="left">
                                     <TextField
                                         id="reps"
                                         name="reps"
-                                        // value={this.state.currentSet}
-                                        // onChange={this.handleChange}
                                         type="number"
                                         className={this.props.classes.textField}
                                         margin="small"
@@ -116,6 +123,8 @@ class SimpleTable extends Component {
                                         fullWidth="false"
                                         margin="dense"
                                         style={{ width: '2.5rem' }}
+                                        value={this.state.sets[index].reps}
+                                        onChange={event => this.handleRepChange(event, index)}
                                     />
                                 </TableCell>
                                 <TableCell align="right">
@@ -137,6 +146,7 @@ class SimpleTable extends Component {
                         <AddSetButton />
                     </div>
                 </div>
+                <button onClick={() => console.log(this.state.sets)}>State</button>
             </Paper>
         );
     }
