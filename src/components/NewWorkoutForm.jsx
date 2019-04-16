@@ -10,6 +10,9 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 import ExerciseSelector from './ExerciseSelector';
 import AddSetButton from './AddSetButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
@@ -29,31 +32,14 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'center',
     },
-    addSetButton: {
-        border: '1px sold red',
-    }
 });
-
-let id = 0;
-function createData(set, lbs, reps) {
-    id += 1;
-    return { set, lbs, reps };
-}
-
-const sets = [
-    createData('1', '', ''),
-    createData('2', '', ''),
-    createData('3', '', ''),
-];
 
 class SimpleTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
             sets: [
-                { set: 1, lbs: 45, reps: 5 },
-                { set: 2, lbs: 95, reps: 5 },
-                { set: 3, lbs: 135, reps: 5 }
+                { set: 1, lbs: '', reps: '' },
             ],
             currentSet: {
                 set: '',
@@ -76,32 +62,71 @@ class SimpleTable extends Component {
         this.setState({ sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })) })
     }
 
+    handleWeightChange = (event, index) => {
+        console.log('index', event);
+        console.log('current set', this.state.sets[event]);
+
+    }
+
     render() {
         return (
             <Paper className={this.props.classes.root}>
                 <ExerciseSelector className={this.props.classes.exerciseSelector} />
                 <Table className={this.props.classes.table}>
-                    <TableHead>
-                    </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell component="th" scope="row">
-                                Set
-                                </TableCell>
-                            <TableCell align="right">lbs</TableCell>
-                            <TableCell align="right">reps</TableCell>
+                            <TableCell component="th" scope="row">Set</TableCell>
+                            <TableCell align="left">lbs</TableCell>
+                            <TableCell align="left">reps</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
 
-                        {this.state.sets.map(row => (
+                        {this.state.sets.map((row, index) => (
                             <TableRow key={row.set}>
                                 <TableCell component="th" scope="row">
                                     {row.set}
                                 </TableCell>
-                                <TableCell align="right">{row.lbs}</TableCell>
-                                <TableCell align="right">{row.reps}</TableCell>
+                                <TableCell align="left">
+                                    <TextField
+                                        id="lbs"
+                                        name="lbs"
+                                        // value={this.state.sets[index].lbs}
+                                        // onChange={(event) => this.handleWeightChange(event, index)}
+                                        type="number"
+                                        className={this.props.classes.textField}
+                                        margin="small"
+                                        variant="standard"
+                                        placeholder={row.lbs}
+                                        fullWidth="false"
+                                        margin="dense"
+                                        style={{ width: '2.5rem' }}
+                                    />
+                                </TableCell>
+                                <TableCell align="left">
+                                    <TextField
+                                        id="reps"
+                                        name="reps"
+                                        // value={this.state.currentSet}
+                                        // onChange={this.handleChange}
+                                        type="number"
+                                        className={this.props.classes.textField}
+                                        margin="small"
+                                        variant="standard"
+                                        placeholder={row.reps}
+                                        fullWidth="false"
+                                        margin="dense"
+                                        style={{ width: '2.5rem' }}
+                                    />
+                                </TableCell>
                                 <TableCell align="right">
-                                    <button onClick={() => this.deleteSet(row.set)}>Delete</button>
+                                    <IconButton aria-label="Delete" className={this.props.classes.margin}>
+                                        <DeleteIcon
+                                            color="secondary"
+                                            fontSize="small"
+                                            className={this.props.classes.rightIcon}
+                                            onClick={() => this.deleteSet(row.set)}
+                                        />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
