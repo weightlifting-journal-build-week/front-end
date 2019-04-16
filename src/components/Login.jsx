@@ -15,14 +15,14 @@ class Login extends Component {
         }
     }
     login = event => {
-      event.preventDefault();
-      this.props.login(this.state.credentials)
-        .then(() => this.props.history.push('/workouts/{}'))
+        event.preventDefault();
+        this.props.login(this.state.credentials)
+            .then(() => this.props.history.push('/workouts/{}'))
     }
 
     tempLogin = event => {
-      event.preventDefault();
-      this.props.history.push('/workouts');
+        event.preventDefault();
+        this.props.history.push('/workouts');
     }
 
     handleChange = event => {
@@ -37,7 +37,6 @@ class Login extends Component {
     render() {
         return (
             <form className='login-form' onSubmit={this.tempLogin}>
-
                 <label for='username'>E-Mail</label>
                 <input
                     type='text'
@@ -46,7 +45,6 @@ class Login extends Component {
                     value={this.state.credentials.email}
                     onChange={this.handleChange}
                 />
-
                 <label for='password'>Password</label>
                 <input
                     type='password'
@@ -55,19 +53,16 @@ class Login extends Component {
                     value={this.state.credentials.password}
                     onChange={this.handleChange}
                 />
-
                 {this.props.error ? <p className='error'>{this.props.error}</p> : null}
-
                 <button>
                     {this.props.loggingIn ? <Loader type='ThreeDots' color='#1f2a38' height='12' width='26' /> : 'Login'}
                 </button>
-
             </form>
         );
     }
 }
 const mapStateToProps = state => {
-  return ({
+    return ({
         user: state.user,
         error: state.error,
         loggingIn: state.loggingIn
