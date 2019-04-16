@@ -8,17 +8,10 @@ import WorkoutList from '../components/WorkoutList';
 import {getWorkouts} from '../redux/actions';
 
 class WorkoutsView extends Component {
-    constructor() {
-        super();
-        this.state = {
-            currentUser: {
-                username: 'Superman',
-                email: 'clarkkent@superman.com',
-                id: 1
-            }
-        }
-    }
+    componentDidMount(){
+      this.props.getWorkouts(this.props.currentUser.id)
 
+    }
     render() {
         return (
             <div className="workouts-view">
@@ -27,7 +20,10 @@ class WorkoutsView extends Component {
                         <NewWorkoutButton />
                     </a>
                 </div>
-                <WorkoutCard user={this.state.currentUser} />
+                <WorkoutList 
+                  workouts={this.props.workouts}
+                  user={this.props.currentUser}
+                />
             </div>
         );
     }
@@ -35,7 +31,7 @@ class WorkoutsView extends Component {
 const mapStateToProps = ({getWorkouts, currentUser, workouts}) => ({
   getWorkouts,
   currentUser,
-  workouts
+  workouts,
 })
 
 export default withRouter(

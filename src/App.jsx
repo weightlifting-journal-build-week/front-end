@@ -22,11 +22,6 @@ const App = () => {
                     component={WorkoutsView}
                 />
                 <Route
-                    exact
-                    path='/'
-                    component={WorkoutsView}
-                />
-                <Route
                     exact path='/new'
                     component={WorkoutForm}
                 />

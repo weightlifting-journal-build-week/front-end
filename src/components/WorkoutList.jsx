@@ -9,10 +9,9 @@ class WorkoutList extends Component {
   render(){
     return(
       <div className='workout-list'>
-        <h1 style={{textAlign: 'center'}}>Workout History</h1>
+        <h1 style={{textAlign: 'center'}}>{this.props.user.fullname}'s Workout History</h1>
           {this.props.workouts.map((workout, index) => (
-             <WorkoutCard key={index} workout={workout} />
-          ))}
+             <WorkoutCard key={index} workout={workout} />))}
       </div>
     );
   }

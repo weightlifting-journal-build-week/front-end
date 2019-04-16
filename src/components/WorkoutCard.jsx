@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
+
 import WorkoutHistory from './WorkoutHistory';
+import {getExercises} from '../redux/actions';
 
 const styles = theme => ({
     card: {
@@ -18,22 +21,31 @@ const styles = theme => ({
     },
 });
 
-function SimpleCard(props) {
-    const { classes } = props;
-    const bull = <span className={classes.bullet}>•</span>;
-
+class SimpleCard extends Component {
+  componentDidMount(){
+    this.props.getExercises(this.props.workout.id)
+  }
+  render(){
     return (
-        <Card className={classes.card}>
-          <Typography className={classes.date} variant="h5" gutterBottom>
-              {props.workout.date}
+        <Card className={this.props.classes.card}>
+          <Typography className={this.props.classes.date} variant="h5" gutterBottom>
+              {this.props.workout.name}    {this.props.workout.date}
           </Typography>
-          <WorkoutHistory workout={props.workout}/>
+          <WorkoutHistory workout={this.props.workout}/>
         </Card>
     );
+  }
 }
+
+const mapStateToProps = ({currentUser, exercises}) => (
+  exercises
+)
 
 SimpleCard.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleCard);
+export default connect(
+  mapStateToProps,
+  {getExercises}
+)(withStyles(styles)(SimpleCard));
