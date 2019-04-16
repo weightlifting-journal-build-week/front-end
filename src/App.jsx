@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from './components/Navbar';
 import WorkoutsView from './views/WorkoutsView';
 import WorkoutForm from './views/WorkoutForm';
+import MaterialUILogin from './components/MaterialUILogin.js';
 
 const App = () => {
     return (
@@ -15,7 +16,7 @@ const App = () => {
                 <Navbar />
                 <Route
                     path='/login'
-                    component={Login}
+                    component={MaterialUILogin}
                 />
                 <Route
                     path='/workouts'
@@ -27,7 +28,7 @@ const App = () => {
                     component={WorkoutsView}
                 />
                 <Route
-                    path='/new'
+                    exact path='/new'
                     component={WorkoutForm}
                 />
             </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import NewWorkoutButton from '../components/NewWorkoutButton';
-import NewWorkoutForm from '../components/NewWorkoutForm';
 import WorkoutCard from '../components/WorkoutCard';
 
 
@@ -15,11 +14,15 @@ class WorkoutsView extends Component {
             }
         }
     }
+
     render() {
         return (
             <div className="workouts-view">
-                <NewWorkoutButton />
-                <NewWorkoutForm />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <a href="/new">
+                        <NewWorkoutButton />
+                    </a>
+                </div>
                 <WorkoutCard user={this.state.currentUser} />
             </div>
         );
