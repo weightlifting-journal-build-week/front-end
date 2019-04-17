@@ -12,7 +12,13 @@ const NewWorkoutDiv = styled.div`
 class WorkoutForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            exercises: [
+                { id: 1, exercise: 'Squat' },
+                { id: 2, exercise: 'Bench Press' },
+                { id: 3, exercise: 'Deadlift' },
+            ],
+        };
     }
 
     newExercise() {
@@ -22,7 +28,9 @@ class WorkoutForm extends Component {
     render() {
         return (
             <NewWorkoutDiv>
-                <ExerciseCard />
+                {this.state.exercises.map(exercise => (
+                    <ExerciseCard />
+                ))}
                 <div onClick={() => this.newExercise()}>
                     <NewExerciseButton />
                 </div>
