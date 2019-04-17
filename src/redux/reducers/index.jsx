@@ -58,7 +58,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         gettingExercises: false,
-        exercises: action.payload
+        exercises: [...state.exercises,action.payload]
       }
     case FAIL:
       return {
