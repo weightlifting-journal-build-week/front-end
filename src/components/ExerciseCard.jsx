@@ -9,10 +9,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 import ExerciseSelector from './ExerciseSelector';
-import AddSetButton from './AddSetButton';
+import AddSetButton from './Buttons/AddSetButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+
+import NewExerciseButton from './NewExerciseButton';
 
 const styles = theme => ({
     root: {
@@ -41,6 +43,7 @@ class SimpleTable extends Component {
             sets: [
                 { set: 1, lbs: '', reps: '' },
             ],
+            workout: {}
         }
     }
 
@@ -77,6 +80,10 @@ class SimpleTable extends Component {
         })
     }
 
+    newExercise = () => {
+        console.log('newExercise');
+    }
+
     render() {
         return (
             <Paper className={this.props.classes.root}>
@@ -89,7 +96,6 @@ class SimpleTable extends Component {
                             <TableCell align="left">reps</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
-
                         {this.state.sets.map((row, index) => (
                             <TableRow key={row.set}>
                                 <TableCell component="th" scope="row">
@@ -146,7 +152,8 @@ class SimpleTable extends Component {
                         <AddSetButton />
                     </div>
                 </div>
-                <button onClick={() => console.log(this.state.sets)}>State</button>
+                {/* The button below is solely used for debugging in development */}
+                {/* <button onClick={() => console.log(this.state.sets)}>State</button> */}
             </Paper>
         );
     }

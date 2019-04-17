@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NewWorkoutButton from '../components/NewWorkoutButton';
+import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutCard from '../components/WorkoutCard';
 
 
