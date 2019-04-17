@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 
 import NewExerciseButton from './Buttons/NewExerciseButton';
+import DeleteExerciseButton from './Buttons/DeleteExerciseButton';
 
 const styles = theme => ({
     root: {
@@ -45,7 +46,7 @@ class SimpleTable extends Component {
                 { set: 1, lbs: '', reps: '' },
             ],
             exercise: '',
-            index: this.props.index
+            exerciseCardIndex: this.props.index
         }
     }
 
@@ -69,7 +70,9 @@ class SimpleTable extends Component {
                 { set: index + 1, lbs: event.target.value, reps: this.state.sets[index].reps },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
             ]
-        })
+        });
+        this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
+
     }
 
     handleRepChange = (event, index) => {
@@ -79,7 +82,8 @@ class SimpleTable extends Component {
                 { set: index + 1, lbs: this.state.sets[index].lbs, reps: event.target.value },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
             ]
-        })
+        });
+        this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
     }
 
     newExercise = () => {
@@ -93,6 +97,11 @@ class SimpleTable extends Component {
         console.log('ExerciseCard selectExercise: ', exercise);
     }
 
+    deleteExercise = () => {
+        console.log('ExerciseCard deleteExercise clicked');
+        console.log('this.state.exerciseCardIndex', this.state.exerciseCardIndex);
+    }
+
     render() {
         return (
             <Paper className={this.props.classes.root}>
@@ -101,8 +110,12 @@ class SimpleTable extends Component {
                     exercise={this.selectExercise}
                     index={this.props.index}
                 />
+                <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
+                    <DeleteExerciseButton />
+                </div>
                 <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
                 <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button>
+
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>

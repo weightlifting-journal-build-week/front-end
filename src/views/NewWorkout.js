@@ -23,15 +23,20 @@ class WorkoutForm extends Component {
         super(props);
         this.state = {
             exercises: [
-                { id: 1, exercise: '' },
-                { id: 2, exercise: '' },
-                { id: 3, exercise: '' },
+                { id: 1, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
+                { id: 2, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
+                { id: 3, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
             ],
         };
     }
 
     newExercise() {
-        console.log('newExercise');
+        this.setState({
+            exercises: [
+                ...this.state.exercises,
+                { id: this.state.exercises.length + 1, exercise: '' },
+            ]
+        });
     }
 
     finishExercise() {
@@ -51,6 +56,20 @@ class WorkoutForm extends Component {
         });
     }
 
+    updateReps = (reps, setNumber, exerciseCardIndex) => {
+        console.log(`NewWorkout.js updateReps 
+                    reps ${reps} 
+                    this.state.exercise index ${setNumber} 
+                    exerciseCardIndex ${exerciseCardIndex}`);
+    }
+
+    updatelbs = (lbs, setNumber, exerciseCardIndex) => {
+        console.log(`NewWorkout.js updatelbs 
+                    lbs ${lbs} 
+                    this.state.exercise index ${setNumber + 1} 
+                    exerciseCardIndex ${exerciseCardIndex}`);
+    }
+
     render() {
         return (
             <NewWorkoutDiv>
@@ -61,6 +80,8 @@ class WorkoutForm extends Component {
                         key="index"
                         index={index}
                         exercise={this.updateExercise}
+                        reps={this.updateReps}
+                        lbs={this.updatelbs}
                     />
                 ))}
                 <ActionButtonsDiv>
