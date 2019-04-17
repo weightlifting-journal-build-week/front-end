@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 
-import WorkoutHistory from './WorkoutHistory';
+import ExerciseList from '../components/ExerciseList';
 import {getExercises} from '../redux/actions';
 
 const styles = theme => ({
@@ -21,7 +21,7 @@ const styles = theme => ({
     },
 });
 
-class SimpleCard extends Component {
+class SimpleTable extends Component {
   componentDidMount(){
     this.props.getExercises(this.props.workout.id)
   }
@@ -31,21 +31,21 @@ class SimpleCard extends Component {
           <Typography className={this.props.classes.date} variant="h5" gutterBottom>
               {this.props.workout.name}    {this.props.workout.date}
           </Typography>
-          <WorkoutHistory workout={this.props.workout}/>
+          <ExerciseList exercises={this.props.exercises}/>  
         </Card>
     );
   }
 }
 
-const mapStateToProps = ({currentUser, exercises}) => (
+const mapStateToProps = ({exercises}) => (
   exercises
 )
 
-SimpleCard.propTypes = {
+SimpleTable.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
 export default connect(
   mapStateToProps,
   {getExercises}
-)(withStyles(styles)(SimpleCard));
+)(withStyles(styles)(SimpleTable));

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import WorkoutCard from '../components/WorkoutCard';
 import NewWorkoutButton from '../components/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
 import {getWorkouts} from '../redux/actions';
