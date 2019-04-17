@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +10,9 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 import ExerciseSelector from './ExerciseSelector';
 import AddSetButton from './AddSetButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
@@ -28,50 +31,125 @@ const styles = theme => ({
     addSetContainer: {
         display: 'flex',
         justifyContent: 'center',
-    }
+    },
 });
 
-let id = 0;
-function createData(exercise, lbs, reps) {
-    id += 1;
-    return { id, exercise, lbs, reps };
-}
+class SimpleTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sets: [
+                { set: 1, lbs: '', reps: '' },
+            ],
+        }
+    }
 
-const rows = [
-    createData('Set', 'lbs', 'reps'),
-    createData('', '', ''),
-    createData('Bench Press', 155, 5, 37, 4.3),
-    createData('Overhead Press', 90, 5, 24, 6.0),
-    createData('Wide-Grip Lat Pulldown', 120, 8, 67, 4.3),
-    createData('Front Squat', 115, 8, 49, 3.9),
-];
+    newSet = () => {
+        const newSet = { set: this.state.sets.length + 1, lbs: '', reps: '' }
+        this.setState((state, props) => ({
+            sets: [...this.state.sets, newSet]
+        }))
+        console.log('this.state: ', this.state);
+    }
 
-function SimpleTable(props) {
-    const { classes } = props;
+    deleteSet = id => {
+        const removeSet = this.state.sets.filter(item => item.set !== id);
+        this.setState({ sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })) })
+    }
 
-    return (
-        <Paper className={classes.root}>
-            <ExerciseSelector className={classes.exerciseSelector} />
-            <Table className={classes.table}>
-                <TableHead>
-                </TableHead>
-                <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.id}>
-                            <TableCell component="th" scope="row">
-                                {row.exercise}
-                            </TableCell>
-                            <TableCell align="right">{row.lbs}</TableCell>
-                            <TableCell align="right">{row.reps}</TableCell>
+    handleWeightChange = (event, index) => {
+        this.setState({
+            sets: [
+                ...this.state.sets.slice(0, index),
+                { set: index + 1, lbs: event.target.value, reps: this.state.sets[index].reps },
+                ...this.state.sets.slice(index + 1, this.state.sets.length)
+            ]
+        })
+    }
+
+    handleRepChange = (event, index) => {
+        this.setState({
+            sets: [
+                ...this.state.sets.slice(0, index),
+                { set: index + 1, lbs: this.state.sets[index].lbs, reps: event.target.value },
+                ...this.state.sets.slice(index + 1, this.state.sets.length)
+            ]
+        })
+    }
+
+    render() {
+        return (
+            <Paper className={this.props.classes.root}>
+                <ExerciseSelector className={this.props.classes.exerciseSelector} />
+                <Table className={this.props.classes.table}>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell component="th" scope="row">Set</TableCell>
+                            <TableCell align="left">lbs</TableCell>
+                            <TableCell align="left">reps</TableCell>
+                            <TableCell align="right"></TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <div className={classes.addSetContainer}>
-                <AddSetButton className={classes.addSet} />
-            </div>
-        </Paper>
-    );
+
+                        {this.state.sets.map((row, index) => (
+                            <TableRow key={row.set}>
+                                <TableCell component="th" scope="row">
+                                    {row.set}
+                                </TableCell>
+                                <TableCell align="left">
+                                    <TextField
+                                        id="lbs"
+                                        name="lbs"
+                                        type="number"
+                                        className={this.props.classes.textField}
+                                        margin="small"
+                                        variant="standard"
+                                        placeholder={row.lbs}
+                                        fullWidth="false"
+                                        margin="dense"
+                                        style={{ width: '2.5rem' }}
+                                        value={this.state.sets[index].lbs}
+                                        onChange={event => this.handleWeightChange(event, index)}
+                                    />
+                                </TableCell>
+                                <TableCell align="left">
+                                    <TextField
+                                        id="reps"
+                                        name="reps"
+                                        type="number"
+                                        className={this.props.classes.textField}
+                                        margin="small"
+                                        variant="standard"
+                                        placeholder={row.reps}
+                                        fullWidth="false"
+                                        margin="dense"
+                                        style={{ width: '2.5rem' }}
+                                        value={this.state.sets[index].reps}
+                                        onChange={event => this.handleRepChange(event, index)}
+                                    />
+                                </TableCell>
+                                <TableCell align="right">
+                                    <IconButton aria-label="Delete" className={this.props.classes.margin}>
+                                        <DeleteIcon
+                                            color="secondary"
+                                            fontSize="small"
+                                            className={this.props.classes.rightIcon}
+                                            onClick={() => this.deleteSet(row.set)}
+                                        />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <div className={this.props.classes.addSetContainer}>
+                    <div onClick={() => this.newSet()}>
+                        <AddSetButton />
+                    </div>
+                </div>
+                <button onClick={() => console.log(this.state.sets)}>State</button>
+            </Paper>
+        );
+    }
 }
 
 SimpleTable.propTypes = {

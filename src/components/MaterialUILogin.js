@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,7 @@ import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Loader from 'react-loader-spinner';
 
 const styles = theme => ({
     main: {
@@ -45,49 +46,105 @@ const styles = theme => ({
     },
 });
 
-function SignIn(props) {
-    const { classes } = props;
+class Login extends Component {
+    constructor() {
+        super()
+        this.state = {
+            credentials: {
+                username: '',
+                password: ''
+            }
+        }
+    }
 
-    return (
-        <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <FitnessCenterIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                    >
+    login = event => {
+        event.preventDefault();
+        this.props.login(this.state.credentials)
+            .then(() => this.props.history.push('/workouts/{}'))
+    }
+
+    tempLogin = event => {
+        event.preventDefault();
+        this.props.history.push('/workouts');
+    }
+
+    handleChange = event => {
+        this.setState({
+            credentials: {
+                ...this.state.credentials,
+                [event.target.name]: event.target.value
+            }
+        });
+    };
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <main className={classes.main}>
+                <CssBaseline />
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <FitnessCenterIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Sign in
-          </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+                </Typography>
+                    <form className={classes.form} onSubmit={this.tempLogin}>
+                        <FormControl
+                            margin="normal"
+                            required
+                            fullWidth
+                        >
+                            <InputLabel htmlFor="email">
+                                Email Address
+                            </InputLabel>
+                            <Input
+                                id="email"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                value={this.state.credentials.email}
+                                onChange={this.handleChange}
+                            />
+                        </FormControl>
+                        <FormControl
+                            margin="normal"
+                            required fullWidth
+                        >
+                            <InputLabel htmlFor="password">
+                                Password
+                            </InputLabel>
+                            <Input
+                                name="password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={this.state.credentials.password}
+                                onChange={this.handleChange}
+                            />
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                        >
+                            {this.props.loggingIn ? <Loader type='ThreeDots' color='#1f2a38' height='12' width='26' /> : 'Login'}
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
 }
 
-SignIn.propTypes = {
+Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Login);
