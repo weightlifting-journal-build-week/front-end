@@ -1,10 +1,10 @@
 import React from 'react';
 
-import PrivateRoute from './components/PrivateRoute';
+// import Login from './components/Login';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from './components/Navbar';
-import WorkoutHistory from './views/WorkoutHistory';
+import Home from './views/Home';
 import NewWorkout from './views/NewWorkout';
 import Login from './views/Login.js';
 
@@ -18,13 +18,9 @@ const App = () => {
                     component={Login}
                 />
                 <Route
-                    path='/workouts'
-                    component={WorkoutHistory}
-                />
-                <Route
                     exact
                     path='/'
-                    component={WorkoutHistory}
+                    component={Home}
                 />
                 <Route
                     exact path='/new'

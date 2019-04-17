@@ -65,7 +65,7 @@ class Login extends Component {
 
     tempLogin = event => {
         event.preventDefault();
-        this.props.history.push('/workouts');
+        this.props.history.push('/');
     }
 
     handleChange = event => {
@@ -83,6 +83,7 @@ class Login extends Component {
             <main className={classes.main}>
                 <CssBaseline />
                 <Paper className={classes.paper}>
+                <button onClick={() => console.log(this.state)}>Current State</button>
                     <Avatar className={classes.avatar}>
                         <FitnessCenterIcon />
                     </Avatar>
