@@ -41,7 +41,14 @@ class WorkoutForm extends Component {
     updateExercise = (exercise, index) => {
         console.log('NewWorkout updateExercise exercise', exercise);
         console.log('NewWorkout updateExercise index', index);
-        this.setState({ updateExercise: exercise });
+        // this.setState({ newExercises: exercise });
+        this.setState({
+            exercises: [
+                ...this.state.exercises.slice(0, index),
+                { id: index + 1, exercise: exercise.value },
+                ...this.state.exercises.slice(index + 1, this.state.exercises.length)
+            ]
+        });
     }
 
     render() {
