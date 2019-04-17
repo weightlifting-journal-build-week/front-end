@@ -13,7 +13,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     buttonContainer: {
-        display: 'flex',
+        display: 'inline-flex',
         justifyContent: 'center',
     }
 });

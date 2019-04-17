@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import ExerciseCard from '../components/ExerciseCard';
-import NewExerciseButton from '../components/NewExerciseButton';
+import NewExerciseButton from '../components/Buttons/NewExerciseButton';
+import FinishWorkoutButton from '../components/Buttons/FinishWorkoutButton';
 import styled from "styled-components";
-import ExerciseSelector from '../components/ExerciseSelector';
 
 const NewWorkoutDiv = styled.div`
   width: 35%;
   margin: 50px auto;
+`;
+
+const ActionButtonsDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ButtonSpan = styled.div`
+  margin: 15px;
 `;
 
 class WorkoutForm extends Component {
@@ -25,15 +34,23 @@ class WorkoutForm extends Component {
         console.log('newExercise');
     }
 
+    finishExercise() {
+        console.log('finishExercise');
+    }
     render() {
         return (
             <NewWorkoutDiv>
                 {this.state.exercises.map(exercise => (
                     <ExerciseCard />
                 ))}
-                <div onClick={() => this.newExercise()}>
-                    <NewExerciseButton />
-                </div>
+                <ActionButtonsDiv>
+                    <ButtonSpan onClick={() => this.newExercise()}>
+                        <NewExerciseButton />
+                    </ButtonSpan>
+                    <ButtonSpan onClick={() => this.finishExercise()}>
+                        <FinishWorkoutButton />
+                    </ButtonSpan>
+                </ActionButtonsDiv>
             </NewWorkoutDiv>
         );
     }

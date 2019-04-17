@@ -14,11 +14,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 
-import NewExerciseButton from './NewExerciseButton';
+import NewExerciseButton from './Buttons/NewExerciseButton';
 
 const styles = theme => ({
     root: {
         overflowX: 'auto',
+        margin: '40px 0',
     },
     table: {
         minWidth: 400,
