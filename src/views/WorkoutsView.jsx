@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
-import NewWorkoutButton from '../components/NewWorkoutButton';
-import WorkoutCard from '../components/WorkoutCard';
+import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import NewWorkoutButton from '../components/NewWorkoutButton';
+import WorkoutList from '../components/WorkoutList';
+import {getWorkouts} from '../redux/actions';
 
 class WorkoutsView extends Component {
-    constructor() {
-        super();
-        this.state = {
-            currentUser: {
-                username: 'Superman',
-                email: 'clarkkent@superman.com',
-                id: 1
-            }
-        }
-    }
+    componentDidMount(){
+      this.props.getWorkouts(this.props.currentUser.id)
 
+    }
     render() {
         return (
             <div className="workouts-view">
@@ -23,10 +19,23 @@ class WorkoutsView extends Component {
                         <NewWorkoutButton />
                     </a>
                 </div>
-                <WorkoutCard user={this.state.currentUser} />
+                <WorkoutList 
+                  workouts={this.props.workouts}
+                  user={this.props.currentUser}
+                />
             </div>
         );
     }
 }
+const mapStateToProps = ({getWorkouts, currentUser, workouts}) => ({
+  getWorkouts,
+  currentUser,
+  workouts,
+})
 
-export default WorkoutsView;
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {getWorkouts}
+  )(WorkoutsView)
+);

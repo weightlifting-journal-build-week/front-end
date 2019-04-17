@@ -23,25 +23,50 @@ export const login = credentials => dispatch => {
       payload: error
     })
   })
-}
+};
 
 export const GET_WORKOUTS_START = 'GET_WORKOUTS_START';
 export const GET_WORKOUTS_SUCCESS = 'GET_WORKOUTS_SUCCESS';
 
-export const userWorkouts = () => dispatch => {
-  dispatch({action: GET_WORKOUTS_START});
-  axios.get(`${url}/users/1/workouts`)
-    .then(response => {
-      console.log(response);
+export const getWorkouts = id => dispatch => {
+  dispatch({
+    type: GET_WORKOUTS_START
+  })
+  return axios
+  .get(`${url}users/${id}/workouts`)
+  .then(response => {
+    dispatch({
+      type: GET_WORKOUTS_SUCCESS,
+      payload: response.data
+    })
+  })
+  .catch(error => {
+    dispatch({
+      type: FAIL,
+      payload: error
+    })
+  })
+};
+
+export const GET_EXERCISES_START = 'GET_EXERCISES_START';
+export const GET_EXERCISES_SUCCESS = 'GET_EXERCISES_SUCCESS';
+
+export const getExercises = workoutID => dispatch => {
+  dispatch({
+    type: GET_EXERCISES_START
+  })
+  return axios
+    .get(`${url}workouts/${workoutID}/exercises`)
+    .then(response => (
       dispatch({
-        action: LOGIN_SUCCESS,
+        type: GET_EXERCISES_SUCCESS,
         payload: response.data
       })
-    })
-    .catch(error => {
+    ))
+    .catch(error => (
       dispatch({
-        action: FAIL,
+        type: FAIL,
         payload: error
       })
-    })
+    ))
 }

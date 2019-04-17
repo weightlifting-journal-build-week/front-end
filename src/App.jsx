@@ -1,8 +1,7 @@
 import React from 'react';
 
 import Login from './components/Login';
-import PrivateRoute from './components/PrivateRoute';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import Navbar from './components/Navbar';
 import WorkoutsView from './views/WorkoutsView';
@@ -20,11 +19,6 @@ const App = () => {
                 />
                 <Route
                     path='/workouts'
-                    component={WorkoutsView}
-                />
-                <Route
-                    exact
-                    path='/'
                     component={WorkoutsView}
                 />
                 <Route

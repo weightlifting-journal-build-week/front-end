@@ -20,11 +20,6 @@ class Login extends Component {
             .then(() => this.props.history.push('/workouts/{}'))
     }
 
-    tempLogin = event => {
-        event.preventDefault();
-        this.props.history.push('/workouts');
-    }
-
     handleChange = event => {
         this.setState({
             credentials: {
@@ -36,7 +31,8 @@ class Login extends Component {
 
     render() {
         return (
-            <form className='login-form' onSubmit={this.tempLogin}>
+            <form className='login-form' onSubmit={this.login}>
+
                 <label for='username'>E-Mail</label>
                 <input
                     type='text'
