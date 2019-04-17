@@ -23,9 +23,9 @@ class WorkoutForm extends Component {
         super(props);
         this.state = {
             exercises: [
-                { id: 1, exercise: 'Squat' },
-                { id: 2, exercise: 'Bench Press' },
-                { id: 3, exercise: 'Deadlift' },
+                { id: 1, exercise: '' },
+                { id: 2, exercise: '' },
+                { id: 3, exercise: '' },
             ],
         };
     }
@@ -37,11 +37,24 @@ class WorkoutForm extends Component {
     finishExercise() {
         console.log('finishExercise');
     }
+
+    updateExercise = (exercise, index) => {
+        console.log('NewWorkout updateExercise exercise', exercise);
+        console.log('NewWorkout updateExercise index', index);
+        this.setState({ updateExercise: exercise });
+    }
+
     render() {
         return (
             <NewWorkoutDiv>
-                {this.state.exercises.map(exercise => (
-                    <ExerciseCard />
+                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
+                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
+                {this.state.exercises.map((exercise, index) => (
+                    <ExerciseCard
+                        key="index"
+                        index={index}
+                        exercise={this.updateExercise}
+                    />
                 ))}
                 <ActionButtonsDiv>
                     <ButtonSpan onClick={() => this.newExercise()}>

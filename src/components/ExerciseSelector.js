@@ -182,14 +182,20 @@ const components = {
 };
 
 class IntegrationReactSelect extends React.Component {
-    state = {
-        single: null,
-        multi: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            exercise: null,
+            index: '',
+        };
+    }
 
-    handleChange = name => value => {
+    handleChange = value => {
+        this.props.exercise(value);
+        // this.props.index(1);
         this.setState({
-            [name]: value,
+            exercise: value,
+            index: this.props.index
         });
     };
 
@@ -214,11 +220,13 @@ class IntegrationReactSelect extends React.Component {
                         styles={selectStyles}
                         options={suggestions}
                         components={components}
-                        value={this.state.single}
-                        onChange={this.handleChange('single')}
+                        value={this.state.exercise}
+                        onChange={this.handleChange}
                         placeholder="Select an exercise"
                         isClearable
                     />
+                    <button onClick={() => console.log('State', this.state)}>State</button>
+                    <button onClick={() => console.log('Props', this.props)}>Props</button>
                 </NoSsr>
             </div>
         );

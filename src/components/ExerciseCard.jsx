@@ -44,7 +44,8 @@ class SimpleTable extends Component {
             sets: [
                 { set: 1, lbs: '', reps: '' },
             ],
-            workout: {}
+            exercise: '',
+            index: this.props.index
         }
     }
 
@@ -85,10 +86,23 @@ class SimpleTable extends Component {
         console.log('newExercise');
     }
 
+    selectExercise = exercise => {
+        this.setState({ exercise: exercise });
+        this.props.exercise(exercise, this.state.index);
+        // this.props.exerciseCardIndex('test');
+        console.log('ExerciseCard selectExercise: ', exercise);
+    }
+
     render() {
         return (
             <Paper className={this.props.classes.root}>
-                <ExerciseSelector className={this.props.classes.exerciseSelector} />
+                <ExerciseSelector
+                    className={this.props.classes.exerciseSelector}
+                    exercise={this.selectExercise}
+                    index={this.props.index}
+                />
+                <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
+                <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button>
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>
@@ -153,8 +167,6 @@ class SimpleTable extends Component {
                         <AddSetButton />
                     </div>
                 </div>
-                {/* The button below is solely used for debugging in development */}
-                {/* <button onClick={() => console.log(this.state.sets)}>State</button> */}
             </Paper>
         );
     }
