@@ -12,26 +12,41 @@ class WorkoutsView extends Component {
 
     }
     render() {
+      /*      if(this.props.gettingWorkouts || this.props.gettingExercises){
         return (
-            <div className="workouts-view">
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <a href="/new">
-                        <NewWorkoutButton />
-                    </a>
-                </div>
-                <WorkoutList 
-                  workouts={this.props.workouts}
-                  user={this.props.currentUser}
-                />
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height="100"
+            width="100"
+          />
+        )
+      }else{
+      */
+        return(
+          <div className="workouts-view">
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <a href="/new">
+                <NewWorkoutButton />
+              </a>
             </div>
-        );
-    }
+            <WorkoutList 
+              workouts={this.props.workouts}
+              user={this.props.currentUser}
+            />
+          </div>
+        )
+      }
+  // }
 }
-const mapStateToProps = ({getWorkouts, currentUser, workouts}) => ({
-  getWorkouts,
-  currentUser,
-  workouts,
-})
+const mapStateToProps = 
+  ({getWorkouts, currentUser, workouts, gettingWorkouts, gettingExercises}) => ({
+    getWorkouts,
+    currentUser,
+    workouts,
+    gettingWorkouts,
+    gettingExercises
+  })
 
 export default withRouter(
   connect(
