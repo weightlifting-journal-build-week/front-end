@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Login from './components/Login';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+// import Login from './components/Login';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from './components/Navbar';
-import WorkoutsView from './views/WorkoutsView';
-import WorkoutForm from './views/WorkoutForm';
-import MaterialUILogin from './components/MaterialUILogin.js';
+import Home from './views/Home';
+import NewWorkout from './views/NewWorkout';
+import Login from './views/Login.js';
 
 const App = () => {
     return (
@@ -15,15 +15,16 @@ const App = () => {
                 <Navbar />
                 <Route
                     path='/login'
-                    component={MaterialUILogin}
+                    component={Login}
                 />
                 <Route
-                    path='/workouts'
-                    component={WorkoutsView}
+                    exact
+                    path='/'
+                    component={Home}
                 />
                 <Route
                     exact path='/new'
-                    component={WorkoutForm}
+                    component={NewWorkout}
                 />
             </div>
         </Router>

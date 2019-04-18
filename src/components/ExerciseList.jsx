@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -19,18 +19,14 @@ const styles = theme => ({
     },
 });
 
-function createData(exercise, lbs, sets) {
-    return { exercise, lbs, sets };
-}
+// function createData(exercise, lbs, sets) {
+//     return { exercise, lbs, sets };
+// }
 
 const rows = [
 ];
 
 class SimpleTable extends Component {
-  constructor(){
-    super();
-  }
-
   render(){
       return (
         <Paper className={this.props.classes.root}>
@@ -50,8 +46,7 @@ class SimpleTable extends Component {
                             <TableCell align="right">{exercise.targetArea}</TableCell>
                         </TableRow>
                       ))
-                    }
-        
+                    }        
                 </TableBody>
             </Table>
         </Paper>

@@ -9,14 +9,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 import ExerciseSelector from './ExerciseSelector';
-import AddSetButton from './AddSetButton';
+import AddSetButton from './Buttons/AddSetButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 
+import NewExerciseButton from './Buttons/NewExerciseButton';
+import DeleteExerciseButton from './Buttons/DeleteExerciseButton';
+
 const styles = theme => ({
     root: {
         overflowX: 'auto',
+        margin: '40px 0',
     },
     table: {
         minWidth: 400,
@@ -41,6 +45,8 @@ class SimpleTable extends Component {
             sets: [
                 { set: 1, lbs: '', reps: '' },
             ],
+            exercise: '',
+            exerciseCardIndex: this.props.index
         }
     }
 
@@ -64,7 +70,9 @@ class SimpleTable extends Component {
                 { set: index + 1, lbs: event.target.value, reps: this.state.sets[index].reps },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
             ]
-        })
+        });
+        this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
+
     }
 
     handleRepChange = (event, index) => {
@@ -74,13 +82,36 @@ class SimpleTable extends Component {
                 { set: index + 1, lbs: this.state.sets[index].lbs, reps: event.target.value },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
             ]
-        })
+        });
+        this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
+    }
+
+    newExercise = () => {
+        console.log('newExercise');
+    }
+
+    selectExercise = exercise => {
+        this.setState({ exercise: exercise });
+        this.props.exercise(exercise, this.state.index);
+    }
+
+    deleteExercise = () => {
+        this.props.deleteExercise(this.state.exerciseCardIndex);
     }
 
     render() {
         return (
             <Paper className={this.props.classes.root}>
-                <ExerciseSelector className={this.props.classes.exerciseSelector} />
+                <ExerciseSelector
+                    className={this.props.classes.exerciseSelector}
+                    exercise={this.selectExercise}
+                    index={this.props.index}
+                />
+                <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
+                    <DeleteExerciseButton />
+                </div>
+                {/* <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
+                <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button> */}
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>
@@ -89,7 +120,6 @@ class SimpleTable extends Component {
                             <TableCell align="left">reps</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
-
                         {this.state.sets.map((row, index) => (
                             <TableRow key={row.set}>
                                 <TableCell component="th" scope="row">
@@ -146,7 +176,6 @@ class SimpleTable extends Component {
                         <AddSetButton />
                     </div>
                 </div>
-                <button onClick={() => console.log(this.state.sets)}>State</button>
             </Paper>
         );
     }
