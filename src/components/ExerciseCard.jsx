@@ -61,6 +61,7 @@ class SimpleTable extends Component {
 
     deleteSet = id => {
         const removeSet = this.state.sets.filter(item => item.set !== id);
+        this.props.sets(removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })), this.state.exerciseCardIndex);        
         this.setState({ sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })) })
     }
 
