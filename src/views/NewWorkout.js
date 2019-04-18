@@ -3,6 +3,7 @@ import ExerciseCard from '../components/ExerciseCard';
 import NewExerciseButton from '../components/Buttons/NewExerciseButton';
 import FinishWorkoutButton from '../components/Buttons/FinishWorkoutButton';
 import styled from "styled-components";
+import axios from 'axios';
 
 const NewWorkoutDiv = styled.div`
   width: 35%;
@@ -23,8 +24,9 @@ class WorkoutForm extends Component {
         super(props);
         this.state = {
             exercises: [
-                { id: 1, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
+                { id: 1, exercise: '', sets: { set: 1, lbs: '', reps: '' } }
             ],
+            newWorkoutID: '',
         };
     }
 
@@ -42,7 +44,29 @@ class WorkoutForm extends Component {
     }
 
     finishExercise() {
-        console.log('finishExercise');
+        axios
+            .get(`https://lifting-app.herokuapp.com/workouts`)
+            .then(response => {
+                this.setState({ newWorkoutID: response.data[response.data.length - 1].id + 1 })
+            })
+            .catch(err => { console.log('NewWorkout finishExercise error', err) });
+
+        const workoutNameArray = this.state.exercises.map(exercise => exercise.exercise);
+        const workoutNameString = workoutNameArray.length === 1 ?
+            workoutNameArray[0] :
+            workoutNameArray.slice(0, -1).join(', ') + ' and ' + workoutNameArray.slice(-1);
+        const currentDate = new Date().toLocaleTimeString('en-us', { weekday: 'long', month: 'long', day: 'numeric' });
+
+        const workout = {
+            id: 10,
+            name: workoutNameString,
+            date: currentDate,
+            user_id: this.state.newWorkoutID
+        }
+        // axios
+        //     .post(`https://lifting-app.herokuapp.com/workouts`, workout)
+        //     .then(response => { console.log(response) })
+        //     .catch(err => { console.log(err) });
     }
 
     updateExercise = (exercise, index) => {
@@ -112,7 +136,7 @@ class WorkoutForm extends Component {
     render() {
         return (
             <NewWorkoutDiv>
-                <button onClick={() => console.log('NewWorkout State', this.state.exercises)}>NewWorkout State</button>
+                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
                 <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
                 {this.state.exercises.map((exercise, index) => (
                     <ExerciseCard
