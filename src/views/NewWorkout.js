@@ -46,10 +46,11 @@ class WorkoutForm extends Component {
     }
 
     updateExercise = (exercise, index) => {
+        const sets = this.state.exercises[index].sets;
         this.setState({
             exercises: [
                 ...this.state.exercises.slice(0, index),
-                { id: index + 1, exercise: exercise.value },
+                { id: index + 1, exercise: exercise.value, sets: sets },
                 ...this.state.exercises.slice(index + 1, this.state.exercises.length)
             ]
         });
