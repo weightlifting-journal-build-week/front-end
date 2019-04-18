@@ -22,7 +22,7 @@ function FloatingActionButtons(props) {
     const { classes } = props;
     return (
         <div className={classes.buttonContainer}>
-            <Fab variant="extended" color="primary" aria-label="Add" className={classes.fab}>
+            <Fab variant="extended" color="secondary" aria-label="Add" className={classes.fab}>
                 <CheckIcon className={classes.addIcon} />
                 <strong>Finish Workout</strong>
             </Fab>

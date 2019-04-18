@@ -34,7 +34,11 @@ class WorkoutForm extends Component {
         this.setState({
             exercises: [
                 ...this.state.exercises,
-                { id: this.state.exercises.length + 1, exercise: '' },
+                {
+                    id: this.state.exercises.length === 0 ? 1 : this.state.exercises[this.state.exercises.length - 1].id + 1,
+                    exercise: '',
+                    sets: { set: 1, lbs: '', reps: '' }
+                },
             ]
         });
     }
@@ -44,9 +48,6 @@ class WorkoutForm extends Component {
     }
 
     updateExercise = (exercise, index) => {
-        console.log('NewWorkout updateExercise exercise', exercise);
-        console.log('NewWorkout updateExercise index', index);
-        // this.setState({ newExercises: exercise });
         this.setState({
             exercises: [
                 ...this.state.exercises.slice(0, index),
@@ -70,11 +71,19 @@ class WorkoutForm extends Component {
                     exerciseCardIndex ${exerciseCardIndex}`);
     }
 
+    deleteExercise = index => {
+        console.log('NewWorkout deleteExercise', index);
+        const { exercises } = this.state;
+        this.setState({
+            exercises: exercises.slice(0, index).concat(exercises.slice(index + 1, exercises.length))
+        });
+    }
+
     render() {
         return (
             <NewWorkoutDiv>
-                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
-                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
+                {/* <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
+                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button> */}
                 {this.state.exercises.map((exercise, index) => (
                     <ExerciseCard
                         key="index"
@@ -82,6 +91,7 @@ class WorkoutForm extends Component {
                         exercise={this.updateExercise}
                         reps={this.updateReps}
                         lbs={this.updatelbs}
+                        deleteExercise={this.deleteExercise}
                     />
                 ))}
                 <ActionButtonsDiv>

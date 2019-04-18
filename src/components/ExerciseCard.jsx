@@ -93,13 +93,10 @@ class SimpleTable extends Component {
     selectExercise = exercise => {
         this.setState({ exercise: exercise });
         this.props.exercise(exercise, this.state.index);
-        // this.props.exerciseCardIndex('test');
-        console.log('ExerciseCard selectExercise: ', exercise);
     }
 
     deleteExercise = () => {
-        console.log('ExerciseCard deleteExercise clicked');
-        console.log('this.state.exerciseCardIndex', this.state.exerciseCardIndex);
+        this.props.deleteExercise(this.state.exerciseCardIndex);
     }
 
     render() {
@@ -113,9 +110,8 @@ class SimpleTable extends Component {
                 <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
                     <DeleteExerciseButton />
                 </div>
-                <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
-                <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button>
-
+                {/* <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
+                <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button> */}
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>

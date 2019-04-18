@@ -9,20 +9,28 @@ import DeleteIcon from '@material-ui/icons/Delete';
 const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
-        margin: '25px 0',
+        margin: '20px 0',
         backgroundColor: '#f50057',
-        paddingLeft: 20,
-        paddingRight: 0,
+        paddingRight: 20,
+        paddingLeft: 0,
         margin: 0,
     },
     deleteIcon: {
         marginRight: theme.spacing.unit,
         color: 'white',
+        margin: 0,
+        padding: 0,
     },
     buttonContainer: {
         display: 'block',
         margin: '0 auto',
         textAlgin: 'center',
+    },
+    iconButton: {
+        paddingLeft: '10px',
+        paddingRight: '5px',
+        marginLeft: '5px',
+        marginRight: '0',
     }
 });
 
@@ -31,8 +39,7 @@ function FloatingActionButtons(props) {
     return (
         <div className={classes.buttonContainer}>
             <Fab variant="extended" color="secondary" aria-label="Add" className={classes.fab}>
-                <strong>Remove Exercise</strong>
-                <IconButton aria-label="Delete">
+                <IconButton aria-label="Delete" className={classes.iconButton}>
                     <DeleteIcon
                         color="secondary"
                         fontSize="small"
@@ -40,6 +47,7 @@ function FloatingActionButtons(props) {
                         onClick={() => console.log('DeleteExerciseButton clicked')}
                     />
                 </IconButton>
+                <strong>Remove Exercise</strong>
             </Fab>
         </div>
     );

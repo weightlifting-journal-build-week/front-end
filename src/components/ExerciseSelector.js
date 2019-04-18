@@ -225,8 +225,8 @@ class IntegrationReactSelect extends React.Component {
                         placeholder="Select an exercise"
                         isClearable
                     />
-                    <button onClick={() => console.log('State', this.state)}>State</button>
-                    <button onClick={() => console.log('Props', this.props)}>Props</button>
+                    {/* <button onClick={() => console.log('State', this.state)}>State</button>
+                    <button onClick={() => console.log('Props', this.props)}>Props</button> */}
                 </NoSsr>
             </div>
         );

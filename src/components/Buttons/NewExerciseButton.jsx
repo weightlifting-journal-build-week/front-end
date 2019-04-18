@@ -8,9 +8,11 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
         margin: '25px 0',
+        backgroundColor: '#03a9f4',
     },
     addIcon: {
         marginRight: theme.spacing.unit,
+        color: 'white',
     },
     buttonContainer: {
         display: 'inline-flex',
@@ -22,7 +24,7 @@ function FloatingActionButtons(props) {
     const { classes } = props;
     return (
         <div className={classes.buttonContainer}>
-            <Fab variant="extended" color="secondary" aria-label="Add" className={classes.fab}>
+            <Fab variant="extended" color="primary" aria-label="Add" className={classes.fab}>
                 <AddIcon className={classes.addIcon} />
                 <strong>Add Exercise</strong>
             </Fab>
