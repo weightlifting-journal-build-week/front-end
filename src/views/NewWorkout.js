@@ -74,11 +74,20 @@ class WorkoutForm extends Component {
     }
 
     updatelbs = (lbs, setNumber, exerciseCardIndex) => {
-        console.log(`NewWorkout.js updatelbs 
-                    lbs ${lbs} 
-                    setNumber ${setNumber + 1} 
-                    exerciseCardIndex ${exerciseCardIndex}`);
-        console.log('this.state.exercises[exerciseCardIndex]', this.state.exercises[exerciseCardIndex]);
+        const currentExercise = this.state.exercises[exerciseCardIndex];
+        const currentSets = currentExercise.sets;
+        const currentSetsLength = currentSets.length >= 2 ? currentSets.length : 1;
+        const currentSet = currentSets.length > 1 ? currentSets[setNumber] : currentSets;
+        const earlySets = currentSetsLength === 1 ? [] : currentSets.slice(0, setNumber);
+        const laterSets = currentSetsLength === 1 ? [] : currentSets.slice(setNumber + 1, currentSetsLength);
+        const updatedSets = [...earlySets, { set: currentSet.set, lbs: lbs, reps: currentSet.reps }, ...laterSets];
+        this.setState({
+            exercises: [
+                ...this.state.exercises.slice(0, exerciseCardIndex),
+                { id: currentExercise.id, exercise: currentExercise.exercise, sets: updatedSets },
+                ...this.state.exercises.slice(exerciseCardIndex + 1, this.state.exercises.length)
+            ]
+        });
     }
 
     deleteExercise = index => {
