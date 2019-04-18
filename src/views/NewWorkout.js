@@ -71,16 +71,60 @@ class WorkoutForm extends Component {
                     reps ${reps} 
                     setNumber ${setNumber} 
                     exerciseCardIndex ${exerciseCardIndex}`);
-    }
-
-    updatelbs = (lbs, setNumber, exerciseCardIndex) => {
         const currentExercise = this.state.exercises[exerciseCardIndex];
         const currentSets = currentExercise.sets;
-        const currentSetsLength = currentSets.length >= 2 ? currentSets.length : 1;
+        const currentSetsLength = currentSets.length >= 1 ? currentSets.length : 1;
         const currentSet = currentSets.length > 1 ? currentSets[setNumber] : currentSets;
         const earlySets = currentSetsLength === 1 ? [] : currentSets.slice(0, setNumber);
         const laterSets = currentSetsLength === 1 ? [] : currentSets.slice(setNumber + 1, currentSetsLength);
-        const updatedSets = [...earlySets, { set: currentSet.set, lbs: lbs, reps: currentSet.reps }, ...laterSets];
+        const updatedSet = { set: currentSet.set, lbs: currentSet.lbs, reps: reps };
+        const updatedSets = [...earlySets, updatedSet, ...laterSets];
+
+        console.log('currentSets', currentSets);
+        console.log('currentSet', currentSet);
+        console.log('updatedSet', updatedSet)
+
+        this.setState({
+            exercises: [
+                ...this.state.exercises.slice(0, exerciseCardIndex),
+                { id: currentExercise.id, exercise: currentExercise.exercise, sets: updatedSets },
+                ...this.state.exercises.slice(exerciseCardIndex + 1, this.state.exercises.length)
+            ]
+        });
+    }
+
+    updatelbs = (lbs, setNumber, exerciseCardIndex) => {
+        let currentExercise = this.state.exercises[exerciseCardIndex];
+        let currentSets = currentExercise.sets;
+        let currentSetsLength = currentSets.length >= 1 ? currentSets.length : 1;
+
+        let currentSet = currentSetsLength === 1 ? currentSets : currentSets[setNumber];
+        let currentSetId = currentSet.set;
+        let currentReps = currentSet.reps;
+
+        let earlySets = currentSetsLength === 1 ? [] : currentSets.slice(0, setNumber);
+        let laterSets = currentSetsLength === 1 ? [] : currentSets.slice(setNumber + 1, currentSetsLength);
+        let updatedSets = [...earlySets, { set: currentSet.set, lbs: lbs, reps: currentSet.reps }, ...laterSets];
+
+        console.log('this.state.exercises ', this.state.exercises);
+        console.log('lbs ', lbs);
+        console.log('setNumber ', setNumber);
+        console.log('exerciseCardIndex ', exerciseCardIndex);
+        console.log('currentExercise', currentExercise);
+        console.log('currentExerciseID', currentExercise.id);
+        console.log('currentExerciseName', currentExercise.exercise);
+
+        console.log('currentSets', currentSets);
+        console.log('currentSetsLength', currentSetsLength);
+        console.log('currentSet', currentSet);
+        console.log('currentSetId', currentSetId);
+        console.log('currentReps', currentReps);
+
+        console.log('earlySets', earlySets);
+        console.log('laterSets', laterSets);
+        console.log('updatedSets', updatedSets);
+        console.log('________________________________________');
+
         this.setState({
             exercises: [
                 ...this.state.exercises.slice(0, exerciseCardIndex),
@@ -101,7 +145,7 @@ class WorkoutForm extends Component {
     render() {
         return (
             <NewWorkoutDiv>
-                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
+                <button onClick={() => console.log('NewWorkout State', this.state.exercises)}>NewWorkout State</button>
                 <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
                 {this.state.exercises.map((exercise, index) => (
                     <ExerciseCard
