@@ -24,8 +24,6 @@ class WorkoutForm extends Component {
         this.state = {
             exercises: [
                 { id: 1, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
-                { id: 2, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
-                { id: 3, exercise: '', sets: { set: 1, lbs: '', reps: '' } },
             ],
         };
     }
@@ -37,7 +35,7 @@ class WorkoutForm extends Component {
                 {
                     id: this.state.exercises.length === 0 ? 1 : this.state.exercises[this.state.exercises.length - 1].id + 1,
                     exercise: '',
-                    sets: { set: 1, lbs: '', reps: '' }
+                    sets: [{ set: 1, lbs: '', reps: '' }]
                 },
             ]
         });
@@ -57,18 +55,29 @@ class WorkoutForm extends Component {
         });
     }
 
+    updateSets = (sets, index) => {
+        this.setState({
+            exercises: [
+                ...this.state.exercises.slice(0, index),
+                { id: index + 1, sets: sets },
+                ...this.state.exercises.slice(index + 1, this.state.exercises.length)
+            ]
+        });
+    }
+
     updateReps = (reps, setNumber, exerciseCardIndex) => {
         console.log(`NewWorkout.js updateReps 
                     reps ${reps} 
-                    this.state.exercise index ${setNumber} 
+                    setNumber ${setNumber} 
                     exerciseCardIndex ${exerciseCardIndex}`);
     }
 
     updatelbs = (lbs, setNumber, exerciseCardIndex) => {
         console.log(`NewWorkout.js updatelbs 
                     lbs ${lbs} 
-                    this.state.exercise index ${setNumber + 1} 
+                    setNumber ${setNumber + 1} 
                     exerciseCardIndex ${exerciseCardIndex}`);
+        console.log('this.state.exercises[exerciseCardIndex]', this.state.exercises[exerciseCardIndex]);
     }
 
     deleteExercise = index => {
@@ -82,13 +91,14 @@ class WorkoutForm extends Component {
     render() {
         return (
             <NewWorkoutDiv>
-                {/* <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
-                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button> */}
+                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
+                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
                 {this.state.exercises.map((exercise, index) => (
                     <ExerciseCard
                         key="index"
                         index={index}
                         exercise={this.updateExercise}
+                        sets={this.updateSets}
                         reps={this.updateReps}
                         lbs={this.updatelbs}
                         deleteExercise={this.deleteExercise}

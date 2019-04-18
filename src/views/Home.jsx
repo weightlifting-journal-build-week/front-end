@@ -6,7 +6,7 @@ import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
 import { getWorkouts, getExercises } from '../redux/actions';
 
-class WorkoutsView extends Component {
+class Home extends Component {
     state = {
         user: '',
     }
@@ -53,5 +53,5 @@ export default withRouter(
     connect(
         mapStateToProps,
         { getWorkouts, getExercises }
-    )(WorkoutsView)
+    )(Home)
 );

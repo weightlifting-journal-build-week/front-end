@@ -52,10 +52,11 @@ class SimpleTable extends Component {
 
     newSet = () => {
         const newSet = { set: this.state.sets.length + 1, lbs: '', reps: '' }
+        this.props.sets([...this.state.sets, newSet], this.state.exerciseCardIndex);
+        console.log('ExerciseCard newSet [...this.state.sets, newSet]', [...this.state.sets, newSet]);
         this.setState((state, props) => ({
             sets: [...this.state.sets, newSet]
-        }))
-        console.log('this.state: ', this.state);
+        }));
     }
 
     deleteSet = id => {
@@ -71,8 +72,7 @@ class SimpleTable extends Component {
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
             ]
         });
-        this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
-
+        this.props.lbs(event.target.value, index, this.state.exerciseCardIndex);
     }
 
     handleRepChange = (event, index) => {
@@ -92,7 +92,7 @@ class SimpleTable extends Component {
 
     selectExercise = exercise => {
         this.setState({ exercise: exercise });
-        this.props.exercise(exercise, this.state.index);
+        this.props.exercise(exercise, this.state.exerciseCardIndex);
     }
 
     deleteExercise = () => {
@@ -110,8 +110,14 @@ class SimpleTable extends Component {
                 <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
                     <DeleteExerciseButton />
                 </div>
-                {/* <button onClick={() => console.log('ExerciseCard State', this.state)}>State</button>
-                <button onClick={() => console.log('ExerciseCard Props', this.props)}>Props</button> */}
+
+                <br />
+                <br />
+                <button onClick={() => console.log('ExerciseCard State', this.state)}>ExerciseCard State</button>
+                <button onClick={() => console.log('ExerciseCard Props', this.props)}>ExerciseCard Props</button>
+                <br />
+                <br />
+
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>
