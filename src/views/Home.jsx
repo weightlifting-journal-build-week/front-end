@@ -22,6 +22,9 @@ class Home extends Component {
             let id = decoded.subject
             this.props.getCurrentUser(id);
             this.props.getWorkouts(id);
+        } else {
+            this.props.history.push('/login');
+            return
         }
     }
 
