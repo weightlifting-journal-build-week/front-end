@@ -54,21 +54,27 @@ class WorkoutForm extends Component {
 
     finishExercise() {
         axios
+            // Get workouts from workouts table
             .get(`https://lifting-app.herokuapp.com/workouts`)
             .then(response => {
+                // Sets newWorkoutID in component state to the next id from the response
                 this.setState({ newWorkoutID: response.data[response.data.length - 1].id + 1 });
+                // Loop through exercises in state and create a new array
                 const workoutNameArray = this.state.exercises.map(exercise => exercise.exercise);
+                // Creates a string with the exercise names from the new array
                 const workoutNameString = workoutNameArray.length === 1 ?
                     workoutNameArray[0] :
                     workoutNameArray.slice(0, -1).join(', ') + ' and ' + workoutNameArray.slice(-1);
+                // Creates a string of with the current date and time based on the user
                 const currentDate = new Date().toLocaleTimeString('en-us', { weekday: 'long', month: 'long', day: 'numeric' });
+                // Creates a workout object to send to the workouts table
                 const workout = {
                     id: this.state.newWorkoutID,
                     name: workoutNameString,
                     date: currentDate,
                     user_id: 1,
                 };
-                console.log('NewWorkout finishExercise axios.get workout ', workout)
+                // Send a post request to the workouts table and console log the results
                 axios
                     .post(`https://lifting-app.herokuapp.com/workouts`, workout)
                     .then(response => { console.log('NewWorkout finishExercise axios.post workout', response) })
@@ -86,13 +92,38 @@ class WorkoutForm extends Component {
                     targetArea: this.state.targetArea[exercise.exercise],
                     workout_id: this.state.newWorkoutID,
                 }));
-                console.log('NewWorkout finishExercise get exercises', exercises);
                 axios
                     .post(`https://lifting-app.herokuapp.com/exercises`, exercises)
                     .then(response => { console.log('NewWorkout finishExercise axios.post exercise', response) })
                     .catch(err => { console.log(err) });
             })
             .catch(err => { console.log('https://lifting-app.herokuapp.com/exercises error', err) });
+
+        axios
+            .get(`https://lifting-app.herokuapp.com/sets`)
+            .then(response => {
+                this.setState({ newSetID: response.data[response.data.length - 1].id + 1 });
+                const sets = this.state.exercises.map((exercise, exerciseIndex) =>
+                    (exercise.sets
+                        .map((set, setIndex) => (
+                            {
+                                reps: set.reps,
+                                weight: set.lbs,
+                                exercise_id: this.state.newExerciseID + exerciseIndex,
+                            }
+                        ))
+                    )
+                ).flat().map((set, index) => ({
+                    id: this.state.newSetID + index,
+                    ...set,
+                }));
+
+                axios
+                    .post(`https://lifting-app.herokuapp.com/sets`, sets)
+                    .then(response => { console.log('NewWorkout finishExercise axios.post sets', response) })
+                    .catch(err => { console.log(err) });
+            })
+            .catch(err => { console.log('https://lifting-app.herokuapp.com/sets error', err) });
     }
 
     updateExercise = (exercise, index) => {

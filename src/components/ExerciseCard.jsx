@@ -53,7 +53,6 @@ class SimpleTable extends Component {
     newSet = () => {
         const newSet = { set: this.state.sets.length + 1, lbs: '', reps: '' }
         this.props.sets([...this.state.sets, newSet], this.state.exerciseCardIndex);
-        console.log('ExerciseCard newSet [...this.state.sets, newSet]', [...this.state.sets, newSet]);
         this.setState((state, props) => ({
             sets: [...this.state.sets, newSet]
         }));
