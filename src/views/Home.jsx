@@ -38,26 +38,28 @@ class Home extends Component {
 
 
     render() {
-      if(this.props.gettingWorkouts){
-        return(
-          <Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
-        )
-      }
-      else{
-      return (
-            <div className="workouts-view">
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <a href="/new">
-                        <NewWorkoutButton />
-                    </a>
+        if (this.props.gettingWorkouts) {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+                    <Loader type="Hearts" color="#somecolor" height={80} width={80} />
                 </div>
-                <WorkoutList
-                    workouts={this.props.workouts}
-                    user={this.props.currentUser}
-                />
-            </div>
-        );
-      }
+            )
+        }
+        else {
+            return (
+                <div className="workouts-view">
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <a href="/new">
+                            <NewWorkoutButton />
+                        </a>
+                    </div>
+                    <WorkoutList
+                        workouts={this.props.workouts}
+                        user={this.props.currentUser}
+                    />
+                </div>
+            );
+        }
     }
 }
 const mapStateToProps = ({ getWorkouts, currentUser, workouts, gettingWorkouts, getExercises, token, getCurrentUser }) => ({

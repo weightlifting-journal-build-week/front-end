@@ -129,10 +129,18 @@ class WorkoutForm extends Component {
 
     updateExercise = (exercise, index) => {
         const sets = this.state.exercises[index].sets;
+        console.log('updateExercise exercise', exercise);
+        console.log('updateExercise index', index);
+        console.log('updateExercise this.state.exercises[index].sets', this.state.exercises[index].sets);
+
+        const newExercise = exercise === null ? '' : exercise;
+
+        console.log('newExercise', newExercise)
+
         this.setState({
             exercises: [
                 ...this.state.exercises.slice(0, index),
-                { id: index + 1, exercise: exercise.value, sets: sets },
+                { id: index + 1, exercise: newExercise, sets: sets },
                 ...this.state.exercises.slice(index + 1, this.state.exercises.length)
             ]
         });
@@ -183,6 +191,13 @@ class WorkoutForm extends Component {
         });
     }
 
+    // totalWeight = (setWeight, index, exerciseCardIndex) => {
+    //     console.log('NewWorkout totalWeight');
+    //     console.log('setWeight', setWeight);
+    //     console.log('index', index);
+    //     console.log('exerciseCardIndex', exerciseCardIndex);
+    // }
+
     deleteExercise = index => {
         console.log('NewWorkout deleteExercise', index);
         const { exercises } = this.state;
@@ -203,6 +218,7 @@ class WorkoutForm extends Component {
                         reps={this.updateReps}
                         lbs={this.updatelbs}
                         deleteExercise={this.deleteExercise}
+                        totalWeight={this.totalWeight}
                     />
                 ))}
                 <ActionButtonsDiv>
