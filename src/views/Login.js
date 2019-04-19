@@ -51,7 +51,7 @@ class Login extends Component {
         super()
         this.state = {
             credentials: {
-                username: '',
+                username: 'master@jedicouncil.com',
                 password: ''
             }
         }
@@ -83,7 +83,7 @@ class Login extends Component {
             <main className={classes.main}>
                 <CssBaseline />
                 <Paper className={classes.paper}>
-                <button onClick={() => console.log(this.state)}>Current State</button>
+                    <button onClick={() => console.log(this.state)}>Current State</button>
                     <Avatar className={classes.avatar}>
                         <FitnessCenterIcon />
                     </Avatar>
