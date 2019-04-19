@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import jwt from 'jsonwebtoken';
 import Loader from 'react-loader-spinner';
 
 import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
-import { getWorkouts, getExercises } from '../redux/actions';
+import { getWorkouts, getExercises, getCurrentUser } from '../redux/actions';
 
 class Home extends Component {
     state = {
@@ -13,8 +14,29 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.props.getWorkouts(1);
+        console.log("Home Props", this.props)
+        let token = this.props.token;
+        let decoded = jwt.decode(token);
+        console.log("Decoded Token:", decoded);
+        if(decoded){
+            let id = decoded.subject
+            this.props.getCurrentUser(id);
+            this.props.getWorkouts(id);
+        } else {
+            this.props.history.push('/login');
+            return
+        }
     }
+
+    componentWillReceiveProps(nextProps){
+        console.log("Home NextProps", nextProps);
+        if(nextProps.currentUser == undefined){
+            this.props.history.push('/login');
+            return
+        }
+    }
+
+
     render() {
         if (this.props.gettingWorkouts) {
             return (
@@ -40,18 +62,19 @@ class Home extends Component {
         }
     }
 }
-const mapStateToProps = ({ gettingWorkouts, gettingExercises, getWorkouts, currentUser, workouts, getExercises }) => ({
+const mapStateToProps = ({ getWorkouts, currentUser, workouts, gettingWorkouts, getExercises, token, getCurrentUser }) => ({
     getWorkouts,
-    gettingWorkouts,
     getExercises,
-    gettingExercises,
+    getCurrentUser,
     currentUser,
     workouts,
+    token,
+    gettingWorkouts
 })
 
 export default withRouter(
     connect(
         mapStateToProps,
-        { getWorkouts, getExercises }
+        { getWorkouts, getExercises, getCurrentUser }
     )(Home)
 );

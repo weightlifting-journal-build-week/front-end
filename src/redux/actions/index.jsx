@@ -8,18 +8,44 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const url = 'https://lifting-app.herokuapp.com/';
 
 export const login = credentials => dispatch => {
-    dispatch({ action: LOGIN_START })
-    axios.post(url, credentials)
+    dispatch({ type: LOGIN_START })
+    axios.post(`${url}auth/login`, credentials)
         .then(response => {
-            localStorage.setItem('token', response.data.payload)
+            let token = response.data.token
+            localStorage.setItem('token', token)
             dispatch({
-                action: LOGIN_SUCCESS,
-                payload: response.data.payload
+                type: LOGIN_SUCCESS,
+                payload: token
             })
         })
         .catch(error => {
             dispatch({
-                action: FAIL,
+                type: FAIL,
+                payload: error
+            })
+        })
+};
+
+
+export const GET_CURRENT_USER_START = 'GET_CURRENT_USER_START';
+export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
+
+
+export const getCurrentUser = id => dispatch => {
+    dispatch({
+        type: GET_CURRENT_USER_START
+    })
+    return axios
+        .get(`${url}users/${id}`)
+        .then(response => {
+            dispatch({
+                type: GET_CURRENT_USER_SUCCESS,
+                payload: response.data
+            })
+        })
+        .catch(error => {
+            dispatch({
+                type: FAIL,
                 payload: error
             })
         })

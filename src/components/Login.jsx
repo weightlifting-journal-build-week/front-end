@@ -11,13 +11,19 @@ class Login extends Component {
             credentials: {
                 username: '',
                 password: ''
-            }
+            },
+            loggingIn: false
         }
     }
     login = event => {
         event.preventDefault();
+        console.log("Logging in")
         this.props.login(this.state.credentials)
             .then(() => this.props.history.push('/workouts/{}'))
+    }
+
+    componentDidMount(){
+        console.log("Whatever")
     }
 
     handleChange = event => {
@@ -33,12 +39,12 @@ class Login extends Component {
         return (
             <form className='login-form' onSubmit={this.login}>
 
-                <label for='username'>E-Mail</label>
+                <label for='username'>Username</label>
                 <input
                     type='text'
-                    name='email'
-                    placeholder='e-mail'
-                    value={this.state.credentials.email}
+                    name='username'
+                    placeholder='username'
+                    value={this.state.credentials.username}
                     onChange={this.handleChange}
                 />
                 <label for='password'>Password</label>
