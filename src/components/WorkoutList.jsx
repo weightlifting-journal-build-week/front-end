@@ -1,18 +1,71 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ExercisesView from '../views/ExercisesView';
 
-class WorkoutList extends Component {
-  render(){
-    return(
-      <div className='workout-list'>
-        <h1 style={{textAlign: 'center'}}>{this.props.user.fullname}'s Workout History</h1>
-          {this.props.workouts.map((workout, index) => (
-            <ExercisesView key={index} workout={workout} />
-          ))}
+const styles = theme => ({
+  root: {
+    width: '100%',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+  },
+});
+class ControlledExpansionPanels extends React.Component {
+  state = {
+    expanded: null,
+  };
+
+  handleChange = panel => (event, expanded) => {
+    event.preventDefault();
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+    console.log(`STATE - ${this.state.expanded}`)
+  };
+
+  render() {
+    const { expanded } = this.state;
+
+    return (
+      <div className={this.props.classes.root}>
+      {this.props.workouts.map((workout, index) => (  
+        <ExpansionPanel 
+          expanded={expanded === `panel${index+1}`} 
+          onChange={this.handleChange(`panel${index+1}`)}
+        >
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={this.props.classes.heading}>
+              {workout.date}
+            </Typography>
+            <Typography className={this.props.classes.secondaryHeading}>
+              {workout.name}
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <ExercisesView key={workout.id+index} workoutID={workout.id}/>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))}
       </div>
     );
   }
 }
 
-export default WorkoutList;
+ControlledExpansionPanels.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ControlledExpansionPanels);

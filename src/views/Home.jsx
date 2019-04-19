@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
 import { getWorkouts, getExercises } from '../redux/actions';
 
-class WorkoutsView extends Component {
+class Home extends Component {
     state = {
         user: '',
     }
@@ -25,10 +26,14 @@ class WorkoutsView extends Component {
         // this.props.getExercises(3);
     }
     render() {
-        return (
+      if(this.props.gettingWorkouts){
+        return(
+          <Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
+        )
+      }
+      else{
+      return (
             <div className="workouts-view">
-                <button onClick={() => console.log('WorkoutHistory this.props', this.props)}>Props</button>
-                <button onClick={() => console.log('test', this.props.workouts)}>Workouts</button>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <a href="/new">
                         <NewWorkoutButton />
@@ -40,18 +45,21 @@ class WorkoutsView extends Component {
                 />
             </div>
         );
+      }
     }
 }
-const mapStateToProps = ({ getWorkouts, currentUser, workouts, getExercises }) => ({
-    getWorkouts,
-    getExercises,
-    currentUser,
-    workouts,
+const mapStateToProps = ({ gettingWorkouts, gettingExercises, getWorkouts, currentUser, workouts, getExercises }) => ({
+  getWorkouts,
+  gettingWorkouts,
+  getExercises,
+  gettingExercises,
+  currentUser,
+  workouts,
 })
 
 export default withRouter(
-    connect(
-        mapStateToProps,
-        { getWorkouts, getExercises }
-    )(WorkoutsView)
+  connect(
+    mapStateToProps,
+    {getWorkouts, getExercises}
+  )(Home)
 );

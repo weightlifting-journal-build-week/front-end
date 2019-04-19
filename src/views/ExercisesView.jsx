@@ -1,63 +1,38 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import { withStyles } from '@material-ui/core/styles';
+import Loader from 'react-loader-spinner';
 
 import ExerciseList from '../components/ExerciseList';
 import {getExercises} from '../redux/actions';
 
-const styles = theme => ({
-    card: {
-        minWidth: 500,
-        width: '35%',
-        margin: '0 auto',
-        marginTop: theme.spacing.unit * 3,
-    },
-    date: {
-        align: 'left',
-        margin: 25,
-    },
-});
-
-const rows = []
-
-class SimpleTable extends Component {
+class ExercisesView extends Component {
   componentDidMount(){
-    this.props.getExercises(this.props.workout.id)
+    this.props.getExercises(this.props.workoutID)
   }
   render(){
-    return (
-        <Card className={this.props.classes.card}>
-          <Typography className={this.props.classes.date} variant="h5" gutterBottom>
-              {this.props.workout.name}    {this.props.workout.date}
-          </Typography>
-          <ExerciseList workoutExercises={this.props.exercises.flat().filter(
-            exercise => exercise.workout_id === this.props.workout.id)} 
-          />
-      </Card>
-    )
+    if(this.props.gettingExercises){
+      return(
+        <Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
+      )
+    }
+    else {
+      return (
+        <ExerciseList workoutExercises={this.props.exercises.flat().filter(
+          exercise => exercise.workout_id === this.props.workoutID)} 
+        />
+      )
+    } 
   }
 }
 
 const mapStateToProps = state => {
   return({ 
-    exercises: state.exercises
+    exercises: state.exercises,
+    gettingExercises: state.gettingExercises
   })
 }
-
-SimpleTable.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default connect(
   mapStateToProps,
   {getExercises}
-)(withStyles(styles)(SimpleTable));
+)(ExercisesView);
