@@ -5,18 +5,14 @@ import {
   GET_WORKOUTS_SUCCESS,
   GET_EXERCISES_START,
   GET_EXERCISES_SUCCESS,
+  GET_CURRENT_USER_START,
+  GET_CURRENT_USER_SUCCESS,
   FAIL } from '../actions';
 
 const initialState = {
   error: '',
-  currentUser: {
-    id: 1,
-    fullname: 'Master Yoda',
-    email: 'master@jedicouncil.com',
-    username: 'flippySlashSlash',
-    height: 36,
-    weight: 80
-  },
+  gettingCurrentUser: false,
+  currentUser: undefined,
   loggingIn: false,
   token: 'fakeToken',
   gettingWorkouts: false,
@@ -37,6 +33,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         loggingIn: false,
         token: action.payload
+      }
+    case GET_CURRENT_USER_START:
+      return {
+        ...state,
+        gettingCurrentUser: true
+      }
+    case GET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        gettingCurrentUser: false,
+        currentUser: action.payload
       }
     case GET_WORKOUTS_START:
       return {

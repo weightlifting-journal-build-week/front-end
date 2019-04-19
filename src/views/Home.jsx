@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import jwt from 'jsonwebtoken';
 import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
-import { getWorkouts, getExercises } from '../redux/actions';
+import { getWorkouts, getExercises, getCurrentUser } from '../redux/actions';
 
 class Home extends Component {
     state = {
@@ -12,8 +12,27 @@ class Home extends Component {
     }
 
     componentDidMount() {
+
         this.props.getWorkouts(1);
+        console.log("Home Props", this.props)
+        let token = this.props.token;
+        let decoded = jwt.decode(token);
+        console.log("Decoded Token:", decoded);
+        if(decoded){
+            let id = decoded.subject
+            this.props.getCurrentUser(id);
+        }
     }
+
+    componentWillReceiveProps(nextProps){
+        console.log("Home NextProps", nextProps);
+        if(nextProps.currentUser == undefined){
+            this.props.history.push('/login');
+            return
+        }
+    }
+
+
     render() {
         return (
             <div className="workouts-view">
@@ -30,16 +49,18 @@ class Home extends Component {
         );
     }
 }
-const mapStateToProps = ({ getWorkouts, currentUser, workouts, getExercises }) => ({
+const mapStateToProps = ({ getWorkouts, currentUser, workouts, getExercises, token, getCurrentUser }) => ({
     getWorkouts,
     getExercises,
+    getCurrentUser,
     currentUser,
     workouts,
+    token
 })
 
 export default withRouter(
     connect(
         mapStateToProps,
-        { getWorkouts, getExercises }
+        { getWorkouts, getExercises, getCurrentUser }
     )(Home)
 );

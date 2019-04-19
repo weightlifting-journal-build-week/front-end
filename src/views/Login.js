@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../redux/actions';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -57,15 +59,23 @@ class Login extends Component {
         }
     }
 
-    login = event => {
-        event.preventDefault();
-        this.props.login(this.state.credentials)
-            .then(() => this.props.history.push('/workouts/{}'))
-    }
-
     tempLogin = event => {
         event.preventDefault();
         this.props.history.push('/');
+    }
+
+    login = event => {
+        event.preventDefault();
+        console.log("Logging in")
+        this.props.login(this.state.credentials)
+    }
+
+    componentWillReceiveProps(nextProp){
+        if(nextProp.token !== "faketoken"){
+            this.props.history.push('/');
+        } else {
+            console.log("Token was retreived in Login Component")
+        }
     }
 
     handleChange = event => {
@@ -90,21 +100,21 @@ class Login extends Component {
                     <Typography component="h1" variant="h5">
                         Sign in
                 </Typography>
-                    <form className={classes.form} onSubmit={this.tempLogin}>
+                    <form className={classes.form} onSubmit={this.login}>
                         <FormControl
                             margin="normal"
                             required
                             fullWidth
                         >
-                            <InputLabel htmlFor="email">
-                                Email Address
+                            <InputLabel htmlFor="username">
+                                Username
                             </InputLabel>
                             <Input
-                                id="email"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                name="username"
+                                autoComplete="username"
                                 autoFocus
-                                value={this.state.credentials.email}
+                                value={this.state.credentials.username}
                                 onChange={this.handleChange}
                             />
                         </FormControl>
@@ -144,8 +154,14 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return ({
+        token: state.token
+    })
+};
+
 Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+export default connect(mapStateToProps, { login })(withStyles(styles)(Login));

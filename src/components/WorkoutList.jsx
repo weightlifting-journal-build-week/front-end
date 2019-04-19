@@ -9,7 +9,7 @@ class WorkoutList extends Component {
     render() {
         return (
             <div className='workout-list'>
-                <Typography variant="h4" gutterBottom align="center"> Welcome {this.props.user.fullname}</Typography>
+                <Typography variant="h4" gutterBottom align="center"> Welcome {this.props.user ? this.props.user.fullname : "N/A"}</Typography>
                 {this.props.workouts.map((workout, index) => (
                     <ExercisesView key={index} workout={workout} />
                 ))}
