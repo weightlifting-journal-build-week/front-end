@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import jwt from 'jsonwebtoken';
+import Loader from 'react-loader-spinner';
+
 import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
 import { getWorkouts, getExercises, getCurrentUser } from '../redux/actions';
@@ -12,8 +14,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
-        this.props.getWorkouts(1);
         console.log("Home Props", this.props)
         let token = this.props.token;
         let decoded = jwt.decode(token);
@@ -21,6 +21,7 @@ class Home extends Component {
         if(decoded){
             let id = decoded.subject
             this.props.getCurrentUser(id);
+            this.props.getWorkouts(id);
         }
     }
 
@@ -34,7 +35,13 @@ class Home extends Component {
 
 
     render() {
-        return (
+      if(this.props.gettingWorkouts){
+        return(
+          <Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
+        )
+      }
+      else{
+      return (
             <div className="workouts-view">
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <a href="/new">
@@ -47,15 +54,17 @@ class Home extends Component {
                 />
             </div>
         );
+      }
     }
 }
-const mapStateToProps = ({ getWorkouts, currentUser, workouts, getExercises, token, getCurrentUser }) => ({
+const mapStateToProps = ({ getWorkouts, currentUser, workouts, gettingWorkouts, getExercises, token, getCurrentUser }) => ({
     getWorkouts,
     getExercises,
     getCurrentUser,
     currentUser,
     workouts,
-    token
+    token,
+    gettingWorkouts
 })
 
 export default withRouter(

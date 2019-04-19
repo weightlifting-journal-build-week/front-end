@@ -96,3 +96,26 @@ export const getExercises = workoutID => dispatch => {
             })
         ))
 }
+
+export const GET_SETS_START = 'GET_SETS_START';
+export const GET_SETS_SUCCESS = 'GET_SETS_SUCCESS';
+
+export const getSets = exerciseID => dispatch => {
+  dispatch({
+    type: GET_SETS_START
+  })
+  return axios
+    .get(`${url}exercises/${exerciseID}/sets`)
+    .then(response => {
+      dispatch({
+        type: GET_SETS_SUCCESS,
+        payload: response.data
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: FAIL,
+        payload: error
+      })
+    })
+}
