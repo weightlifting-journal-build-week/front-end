@@ -14,16 +14,6 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.getWorkouts(1);
-        // {
-        //     axios.get(`https://lifting-app.herokuapp.com/users/1/workouts`)
-        //         .then(res => {
-        //             console.log(res)
-        //             // const persons = res.data;
-        //             // this.setState({ persons });
-        //         })
-        // }
-
-        // this.props.getExercises(3);
     }
     render() {
       if(this.props.gettingWorkouts){

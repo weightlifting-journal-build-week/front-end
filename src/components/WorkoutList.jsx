@@ -23,7 +23,7 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
 });
-class ControlledExpansionPanels extends React.Component {
+class ControlledExpansionPanels extends Component {
   state = {
     expanded: null,
   };
@@ -33,7 +33,6 @@ class ControlledExpansionPanels extends React.Component {
     this.setState({
       expanded: expanded ? panel : false,
     });
-    console.log(`STATE - ${this.state.expanded}`)
   };
 
   render() {

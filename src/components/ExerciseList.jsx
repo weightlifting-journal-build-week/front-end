@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import PropTypes from 'prop-types';
 
 import SetsView from '../views/SetsView';
 
@@ -24,7 +24,7 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
 });
-class ControlledExpansionPanels extends React.Component {
+class ControlledExpansionPanels extends Component {
   state = {
     expanded: null,
   };
@@ -65,9 +65,10 @@ class ControlledExpansionPanels extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return ({
-    exercises: state.exercises
-  })
+    return ({
+        gettingExercises: state.gettingExercises,
+        exercises: state.exercises
+    })
 }
 
 ControlledExpansionPanels.propTypes = {

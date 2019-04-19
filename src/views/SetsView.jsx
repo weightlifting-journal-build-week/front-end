@@ -10,7 +10,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import {getSets} from '../redux/actions';
-import SetsList from '../components/SetsList';
 
 const styles = theme => ({
   root: {
@@ -30,9 +29,10 @@ class SimpleTable extends Component {
   
   render() {
   const { classes } = this.props;
-  const exerciseSets = this.props.sets.filter(exerciseSet => 
-      exerciseSet[0].exercise_id === this.props.exerciseID
-    ).flat();
+  const exerciseSets = this.props.sets.filter(exerciseSet => (
+      exerciseSet.length !== 0 &&
+        exerciseSet[0].exercise_id === this.props.exerciseID
+    )).flat();
     
     return (
       <Paper className={classes.root}>

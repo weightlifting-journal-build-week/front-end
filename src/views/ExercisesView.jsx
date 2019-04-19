@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Loader from 'react-loader-spinner';
 
 import ExerciseList from '../components/ExerciseList';
-import {getExercises} from '../redux/actions';
+import { getExercises } from '../redux/actions';
 
 class ExercisesView extends Component {
   componentDidMount(){
