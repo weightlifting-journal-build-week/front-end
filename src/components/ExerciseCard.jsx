@@ -60,7 +60,7 @@ class SimpleTable extends Component {
 
     deleteSet = id => {
         const removeSet = this.state.sets.filter(item => item.set !== id);
-        this.props.sets(removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })), this.state.exerciseCardIndex);        
+        this.props.sets(removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })), this.state.exerciseCardIndex);
         this.setState({ sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })) })
     }
 
@@ -110,14 +110,6 @@ class SimpleTable extends Component {
                 <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
                     <DeleteExerciseButton />
                 </div>
-
-                <br />
-                <br />
-                <button onClick={() => console.log('ExerciseCard State', this.state)}>ExerciseCard State</button>
-                <button onClick={() => console.log('ExerciseCard Props', this.props)}>ExerciseCard Props</button>
-                <br />
-                <br />
-
                 <Table className={this.props.classes.table}>
                     <TableBody>
                         <TableRow>

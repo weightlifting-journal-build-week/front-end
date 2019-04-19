@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles } from '@material-ui/core/styles';
 
 import ExerciseList from '../components/ExerciseList';
-import {getExercises} from '../redux/actions';
+import { getExercises } from '../redux/actions';
 
 const styles = theme => ({
     card: {
@@ -30,27 +30,27 @@ const styles = theme => ({
 const rows = []
 
 class SimpleTable extends Component {
-  componentDidMount(){
-    this.props.getExercises(this.props.workout.id)
-  }
-  render(){
-    return (
-        <Card className={this.props.classes.card}>
-          <Typography className={this.props.classes.date} variant="h5" gutterBottom>
-              {this.props.workout.name}    {this.props.workout.date}
-          </Typography>
-          <ExerciseList workoutExercises={this.props.exercises.flat().filter(
-            exercise => exercise.workout_id === this.props.workout.id)} 
-          />
-      </Card>
-    )
-  }
+    componentDidMount() {
+        this.props.getExercises(this.props.workout.id)
+    }
+    render() {
+        return (
+            <Card className={this.props.classes.card}>
+                <Typography className={this.props.classes.date} variant="h5" gutterBottom>
+                    {this.props.workout.name}    {this.props.workout.date}
+                </Typography>
+                <ExerciseList workoutExercises={this.props.exercises.flat().filter(
+                    exercise => exercise.workout_id === this.props.workout.id)}
+                />
+            </Card>
+        )
+    }
 }
 
 const mapStateToProps = state => {
-  return({ 
-    exercises: state.exercises
-  })
+    return ({
+        exercises: state.exercises
+    })
 }
 
 SimpleTable.propTypes = {
@@ -58,6 +58,6 @@ SimpleTable.propTypes = {
 };
 
 export default connect(
-  mapStateToProps,
-  {getExercises}
+    mapStateToProps,
+    { getExercises }
 )(withStyles(styles)(SimpleTable));

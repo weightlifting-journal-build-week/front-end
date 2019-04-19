@@ -92,6 +92,7 @@ class WorkoutForm extends Component {
                     targetArea: this.state.targetArea[exercise.exercise],
                     workout_id: this.state.newWorkoutID,
                 }));
+                console.log('NewWorkout finishExercise exercises', exercises)
                 axios
                     .post(`https://lifting-app.herokuapp.com/exercises`, exercises)
                     .then(response => { console.log('NewWorkout finishExercise axios.post exercise', response) })
@@ -193,8 +194,6 @@ class WorkoutForm extends Component {
     render() {
         return (
             <NewWorkoutDiv>
-                <button onClick={() => console.log('NewWorkout State', this.state)}>NewWorkout State</button>
-                <button onClick={() => console.log('NewWorkout Props', this.props)}>NewWorkout Props</button>
                 {this.state.exercises.map((exercise, index) => (
                     <ExerciseCard
                         key="index"
