@@ -13,6 +13,9 @@ import AddSetButton from './Buttons/AddSetButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 
 import NewExerciseButton from './Buttons/NewExerciseButton';
 import DeleteExerciseButton from './Buttons/DeleteExerciseButton';
@@ -46,7 +49,8 @@ class SimpleTable extends Component {
                 { set: 1, lbs: '', reps: '' },
             ],
             exercise: '',
-            exerciseCardIndex: this.props.index
+            exerciseCardIndex: this.props.index,
+            totalWeight: 0,
         }
     }
 
@@ -61,7 +65,11 @@ class SimpleTable extends Component {
     deleteSet = id => {
         const removeSet = this.state.sets.filter(item => item.set !== id);
         this.props.sets(removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })), this.state.exerciseCardIndex);
-        this.setState({ sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })) })
+        this.setState({
+            sets: removeSet.map((set, index) => ({ set: index + 1, lbs: set.lbs, reps: set.reps })),
+            totalWeight: this.state.totalWeight - this.state.sets.filter(item => item.set === id)[0].lbs * this.state.sets.filter(item => item.set === id)[0].reps,
+        })
+        console.log('deleteSet weight', this.state.sets.filter(item => item.set === id)[0].lbs * this.state.sets.filter(item => item.set === id)[0].reps);
     }
 
     handleWeightChange = (event, index) => {
@@ -70,9 +78,10 @@ class SimpleTable extends Component {
                 ...this.state.sets.slice(0, index),
                 { set: index + 1, lbs: event.target.value, reps: this.state.sets[index].reps },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
-            ]
+            ],
+            totalWeight: this.state.sets.length === 1 ? (event.target.value * this.state.sets[index].lbs) : [...this.state.sets.slice(0, index), ...this.state.sets.slice(index + 1, this.state.sets.length)].map(set => set.lbs * set.reps).reduce((acc, val) => acc + val) + (event.target.value * this.state.sets[index].reps),
         });
-        this.props.lbs(event.target.value, index, this.state.exerciseCardIndex);
+        this.props.lbs(this.state.totalWeight, index, this.state.exerciseCardIndex)
     }
 
     handleRepChange = (event, index) => {
@@ -81,7 +90,10 @@ class SimpleTable extends Component {
                 ...this.state.sets.slice(0, index),
                 { set: index + 1, lbs: this.state.sets[index].lbs, reps: event.target.value },
                 ...this.state.sets.slice(index + 1, this.state.sets.length)
-            ]
+            ],
+            totalWeight: this.state.sets.length === 1 ? (event.target.value * this.state.sets[index].lbs) : [...this.state.sets.slice(0, index), ...this.state.sets.slice(index + 1, this.state.sets.length)].map(set => set.lbs * set.reps).reduce((acc, val) => acc + val) + (event.target.value * this.state.sets[index].lbs)
+            // currentSetWeight: event.target.value * this.state.sets[index].lbs,
+            // + (event.target.value * this.state.sets[index].lbs) + this.state.sets.slice(index + 1, this.state.sets.length).map(set => set.lbs * set.reps).reduce((acc, val) => acc + val),
         });
         this.props.reps(event.target.value, index, this.state.exerciseCardIndex);
     }
@@ -107,6 +119,18 @@ class SimpleTable extends Component {
                     exercise={this.selectExercise}
                     index={this.props.index}
                 />
+                <div style={{ display: 'flex', justifyContent: 'center', margin: 20 }}>
+                    {this.state.totalWeight === 0 ? null :
+                        <Typography variant="title">
+                            {this.state.totalWeight > 100 ? <span> 💪 </span> : null}
+                            {this.state.totalWeight > 200 ? <span> 💪 </span> : null}
+                            {this.state.totalWeight > 500 ? <span> 💪 </span> : null}
+                            Total Weight {this.state.totalWeight} lbs
+                            {this.state.totalWeight > 100 ? <span> 💪 </span> : null}
+                            {this.state.totalWeight > 200 ? <span> 💪 </span> : null}
+                            {this.state.totalWeight > 500 ? <span> 💪 </span> : null}
+                        </Typography>}
+                </div>
                 <div style={{ display: 'flex', justifyContent: 'center' }} onClick={() => this.deleteExercise()}>
                     <DeleteExerciseButton />
                 </div>
@@ -174,7 +198,7 @@ class SimpleTable extends Component {
                         <AddSetButton />
                     </div>
                 </div>
-            </Paper>
+            </Paper >
         );
     }
 }
