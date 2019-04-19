@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 import NewWorkoutButton from '../components/Buttons/NewWorkoutButton';
 import WorkoutList from '../components/WorkoutList';
@@ -15,7 +16,13 @@ class Home extends Component {
         this.props.getWorkouts(1);
     }
     render() {
-        return (
+      if(this.props.gettingWorkouts){
+        return(
+          <Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
+        )
+      }
+      else{
+      return (
             <div className="workouts-view">
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <a href="/new">
@@ -28,18 +35,21 @@ class Home extends Component {
                 />
             </div>
         );
+      }
     }
 }
-const mapStateToProps = ({ getWorkouts, currentUser, workouts, getExercises }) => ({
-    getWorkouts,
-    getExercises,
-    currentUser,
-    workouts,
+const mapStateToProps = ({ gettingWorkouts, gettingExercises, getWorkouts, currentUser, workouts, getExercises }) => ({
+  getWorkouts,
+  gettingWorkouts,
+  getExercises,
+  gettingExercises,
+  currentUser,
+  workouts,
 })
 
 export default withRouter(
-    connect(
-        mapStateToProps,
-        { getWorkouts, getExercises }
-    )(Home)
+  connect(
+    mapStateToProps,
+    {getWorkouts, getExercises}
+  )(Home)
 );

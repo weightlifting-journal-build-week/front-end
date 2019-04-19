@@ -5,6 +5,8 @@ import {
   GET_WORKOUTS_SUCCESS,
   GET_EXERCISES_START,
   GET_EXERCISES_SUCCESS,
+  GET_SETS_START,
+  GET_SETS_SUCCESS,
   FAIL } from '../actions';
 
 const initialState = {
@@ -23,6 +25,8 @@ const initialState = {
   workouts: [],
   gettingExercises: false,
   exercises: [],
+  gettingSets: false,
+  sets: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,7 +62,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         gettingExercises: false,
-        exercises: [...state.exercises,action.payload]
+        exercises: [...state.exercises, action.payload]
+      }
+    case GET_SETS_START:
+      return {
+        ...state,
+        gettingSets: true,
+      }
+    case GET_SETS_SUCCESS:
+      return {
+        ...state,
+        gettingSets: false,
+        sets: [...state.sets, action.payload]
       }
     case FAIL:
       return {
@@ -66,6 +81,7 @@ const reducer = (state = initialState, action) => {
         loggingIn: false,
         gettingWorkouts: false,
         gettingExercises: false,
+        gettingSets: false,
         error: action.payload
       }
     default:
