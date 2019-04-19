@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -50,16 +50,17 @@ class SimpleTable extends Component {
 }
 
 SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {
-  return ({
-    exercises: state.exercises
-  })
+    return ({
+        gettingExercises: state.gettingExercises,
+        exercises: state.exercises
+    })
 }
 
 export default connect(
-  mapStateToProps,
-  null
+    mapStateToProps,
+    null
 )(withStyles(styles)(SimpleTable));
